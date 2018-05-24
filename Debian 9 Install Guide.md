@@ -124,12 +124,35 @@ $ ./go-genesis generateFirstBlock --config=node1/config.toml
 ```
 Initialize database:
 ```
-./go-genesis initDatabase --config=node1/config.toml
+$ ./go-genesis initDatabase --config=node1/config.toml
 ```
 ### Build Molis App
+For building Molis application you need install Yarn package manager. Download Yarn version 1.6.0 from [GitHub](https://github.com/yarnpkg/yarn/releases) or via command line:
+```
+$ cd /opt/apla &&  wget https://github.com/yarnpkg/yarn/releases/download/v1.6.0/yarn_1.6.0_all.deb
+```
+Install Yarn:
+```
+$ sudo dpkg -i yarn_1.6.0_all.deb && rm yarn_1.6.0_all.deb
+```
+Download latest release of Genesis-Front (Molis) from [GitHub](https://github.com/centrifugal/centrifugo/releases/) via git:
+```
+$ git clone https://github.com/GenesisKernel/genesis-front.git
+```
+Install Genesis-Front dependencies via Yarn:
+```
+$ cd genesis-front/ && yarn install
+```
+Molis client can be build via two technical implementations:
+- Desktop Application
+- Web Application
+
+#### Build Molis Desktop App
+
+#### Build Molis Web App
 
 ### Create Services
-
+Under development
 ### Start First Node
 ## Deploy Second Node
 ### Configuration
