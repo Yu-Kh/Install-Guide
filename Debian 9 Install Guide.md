@@ -31,6 +31,7 @@ $ sudo apt install -y postgresql git curl apt-transport-https build-essential
 
 ### Create Apla directory
 All software used by Apla Blockchain Platform is recommended to store in a special directory.
+
 Make directory and go to it:
 ```
 $ sudo mkdir /opt/apla && cd /opt/apla
@@ -40,15 +41,32 @@ Make your user owner of this directory:
 $ sudo chown user /opt/apla/
 ```
 ### Install Node.js
-Download and install Node.js LTS version 8.11:
+Download Node.js LTS version 8.11 from the [official site](https://nodejs.org/en/download/) or via command line:
 ```
-$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash && sudo apt install -y nodejs
+$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash
 ```
-
-### Install Go
-
+Install Node.js:
+```
+$ sudo apt install -y nodejs
+```
+### Install Go Language
+Download Go latest stable version 1.10 from the [official site](https://golang.org/dl/) or via command line:
+```
+$ wget https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz
+```
+Install Go:
+```
+$ tar -xvf go1.10.1.linux-amd64.tar.gz && sudo mv go /usr/local/
+```
+Export Go environment variables:
+```
+export GOROOT=/usr/local/go && export GOPATH=/opt/apla/ && export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+```
 ### Setup PostgreSQL
+
 ### Remove temporary files
+## Install prerequisites via script
+
 # Apla Blockchain Platform
 ## Install First Node
 ### Install Centrifugo
