@@ -143,15 +143,44 @@ Install Genesis-Front dependencies via Yarn:
 ```
 $ cd genesis-front/ && yarn install
 ```
-Molis client can be build via two technical implementations:
+Molis client can be build via three technical implementations:
 - Desktop Application
 - Web Application
+- Mobile Application
 
 #### Build Molis Desktop App
+First, you should create settings.json file.
+Create settings.json file which contains connections information about full nodes:
+```
+$ cp public/settings.json.dist public/settings.json
+```
+Edit settings.json file by any text editor and add required settings in next format:
+```
+http://Node_IP-address:Node_HTTP-Port
+```
 
-
+**Example** settings.json for three nodes:
+```
+{
+    "fullNodes": [
+        "http://10.10.99.1:7079",
+        "http://10.10.99.2:7079",
+        "http://10.10.99.3:7079"
+    ]
+}
+```
+Build desktop app by Yarn:
+```
+$ cd /opt/apla/genesis-front && yarn build-desktop
+```
+Then desktop app must be packed to the AppImage:
+```
+$ yarn release --publish never –l
+```
+After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
 #### Build Molis Web App
-
+#### Build Molis Mobile App
+Under development
 ### Create Services
 Under development
 ### Start First Node
