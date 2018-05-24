@@ -178,14 +178,52 @@ $ yarn release --publish never –l
 ```
 After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
 #### Build Molis Web App
+Create settings.json file as its described in Build Molis Desktop App section.
+
+Build web app:
+```
+$ cd /opt/apla/genesis-front/ && yarn build
+```
+After building, redistributable files will be placed to the '/build' directory. You can serve it with any web-server of your choice. Settings.json file must be also placed there. It is woth noting that you shouldn't buld your application again if your connection settings will change. Just edit settings.json file and restart web-server.
+
+For development or testing purposes you can simple build Yarn's web-server:
+```
+$ sudo yarn global add serve && serve -s build
+```
+After this, your Molis Web App will be accessed at: ht&#8203;tp://localhost:5000
+
 #### Build Molis Mobile App
 Under development
+
 ### Create Services
 Under development
+
 ### Start First Node
+For starting first node you should start two services:
+- centrifugo
+- go-genesis
+
+If you did not create these services, you can just execute binary files from its directories in different consoles.
+
+First, execute centrifugo file:
+```
+$ cd /opt/apla/centrifugo && ./centrifugo -a localhost --config=config.json
+```
+Then, in another console execute go-genesis file:
+```
+$ cd /opt/apla/go-genesis/ && ./go-genesis start --config=node1/config.toml
+```
+Now, you can connecting to your node via Molis App.
+
 ## Deploy Second Node
+
 ### Configuration
+
 ### Add keys
+
 ### Create connection between nodes
+
 ## Work with system
+
 ### Login as Founder
+### Create wallet
