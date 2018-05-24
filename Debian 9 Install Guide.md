@@ -81,11 +81,24 @@ This section under development
 # Apla Blockchain Platform
 Apla Blockchain Platform consists of three main components:
 - Centrifugo (notification server)
-- Go-genesis (kernel of the Apla's node, contains TCP-server and API-server)
+- Go-Genesis (kernel of the Apla's node, contains TCP-server and API-server)
 - Molis (frontend client)
+
 In this guide all of this components are deployed on one node, but in production environment you can deploy them on different hosts.
 ## Deploy First Node
 ### Install Centrifugo
+Download Centrifugo version 1.7.9 from [GitHub](https://github.com/centrifugal/centrifugo/releases/) or via command line:
+```
+$ wget https://github.com/centrifugal/centrifugo/releases/download/v1.7.9/centrifugo-1.7.9-linux-amd64.zip && unzip centrifugo-1.7.9-linux-amd64.zip && mkdir centrifugo && mv centrifugo-1.7.9-linux-amd64/* centrifugo/
+```
+Remove temporary files:
+```
+$ rm -R centrifugo-1.7.9-linux-amd64 && rm centrifugo-1.7.9-linux-amd64.zip
+```
+Create Centrifugo configuration file (you can set your own "secret", but also you must change it in node configuration file):
+```
+$ echo '{"secret":"CENT_SECRET"}' > centrifugo/config.json
+```
 ### Install Go-Genesis
 ### Build Molis App
 ### Create Services
