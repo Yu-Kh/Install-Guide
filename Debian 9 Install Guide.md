@@ -149,7 +149,6 @@ Molis client can be build via three technical implementations:
 - Mobile Application
 
 #### Build Molis Desktop App
-First, you should create settings.json file.
 Create settings.json file which contains connections information about full nodes:
 ```
 $ cp public/settings.json.dist public/settings.json
