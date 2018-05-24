@@ -5,7 +5,7 @@ All commands in this guide should be run as non root user. But some system comma
 By default sudo is not installed on Debian 9, and first, you should install it.
 ### Install common software
 ### Create Apla directory
-### Install NodeJS
+### Install Node.js
 ### Install Go
 ### Setup PostgreSQL
 ### Remove temporary files
