@@ -104,16 +104,32 @@ Create go-genesis and node1 directories:
 ```
 $ mkdir go-genesis && cd go-genesis && mkdir node1
 ```
-Download latest release of Go-Genesis from [GitHub](https://github.com/GenesisKernel/go-genesis/releases) and put it in go-genesis directory:
+Download latest release of Go-Genesis from [GitHub](https://github.com/GenesisKernel/go-genesis/releases) and copy it into go-genesis directory:
 ```
 under development
 ```
+Usage and flags of go-genesis are described in [documentation]().
+
 Create Node1 configuration file:
 ```
-$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000
+$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000 --httpHost=10.10.10.1 --tcpHost=10.10.10.1
+```
+Generate Node1 keys:
+```
+$ ./go-genesis generateKeys --config=node1/config.toml
+```
+Generate first block:
+```
+$ ./go-genesis generateFirstBlock --config=node1/config.toml
+```
+Initialize database:
+```
+./go-genesis initDatabase --config=node1/config.toml
 ```
 ### Build Molis App
+
 ### Create Services
+
 ### Start First Node
 ## Deploy Second Node
 ### Configuration
