@@ -60,21 +60,37 @@ $ tar -xvf go1.10.1.linux-amd64.tar.gz && sudo mv go /usr/local/
 ```
 Export Go environment variables:
 ```
-export GOROOT=/usr/local/go && export GOPATH=/opt/apla/ && export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+$ export GOROOT=/usr/local/go && export GOPATH=/opt/apla/ && export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+```
+Remove temporary file:
+```
+$ rm go1.10.1.linux-amd64.tar.gz
 ```
 ### Setup PostgreSQL
-
-### Remove temporary files
+Change user's password postgres to Apla's default (you can set your own password, but also you must change it in node configuration file):
+```
+$ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'genesis'"
+```
+Create node current state database (by default, the first node have database named genesis1, the second one genesis2 and etc):
+```
+$ sudo -u postgres psql -c "CREATE DATABASE genesis1"
+```
 ## Install prerequisites via script
+This section under development
 
 # Apla Blockchain Platform
-## Install First Node
+Apla Blockchain Platform consists of three main components:
+- Centrifugo (notification server)
+- Go-genesis (kernel of the Apla's node, contains TCP-server and API-server)
+- Molis (frontend client)
+In this guide all of this components are deployed on one node, but in production environment you can deploy them on different hosts.
+## Deploy First Node
 ### Install Centrifugo
 ### Install Go-Genesis
 ### Build Molis App
 ### Create Services
 ### Start First Node
-## Install Second Node
+## Deploy Second Node
 ### Configuration
 ### Add keys
 ### Create connection between nodes
