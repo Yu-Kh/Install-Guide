@@ -135,7 +135,7 @@ Install Yarn:
 ```
 $ sudo dpkg -i yarn_1.6.0_all.deb && rm yarn_1.6.0_all.deb
 ```
-Download latest release of Genesis-Front (Molis) from [GitHub](https://github.com/centrifugal/centrifugo/releases/) via git:
+Download latest release of Genesis-Front (Molis) from [GitHub](https://github.com/GenesisKernel/genesis-front) via git:
 ```
 $ git clone https://github.com/GenesisKernel/genesis-front.git
 ```
@@ -148,6 +148,7 @@ Molis client can be build via two technical implementations:
 - Web Application
 
 #### Build Molis Desktop App
+
 
 #### Build Molis Web App
 
