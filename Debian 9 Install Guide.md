@@ -85,7 +85,7 @@ Apla Blockchain Platform consists of three main components:
 - Molis (frontend client)
 
 In this guide all of this components are deployed on one host, but in production environment you can deploy them on different hosts.
-## Deploy First Node
+## First Node Deployment
 ### Install Centrifugo
 Download Centrifugo version 1.7.9 from [GitHub](https://github.com/centrifugal/centrifugo/releases/) or via command line:
 ```
@@ -112,7 +112,7 @@ Usage and flags of go-genesis are described in [documentation]().
 
 Create Node1 configuration file:
 ```
-$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000 --httpHost=10.10.10.1 --tcpHost=10.10.10.1
+$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
 ```
 Generate Node1 keys:
 ```
@@ -215,11 +215,35 @@ $ cd /opt/apla/go-genesis/ && ./go-genesis start --config=node1/config.toml
 ```
 Now, you can connecting to your node via Molis App.
 
-## Deploy Second Node
+## Other Nodes Deployment
+Deployment of the second node and others is similar to the first node, but has some differences in creation of go-genesis config.toml file.
 
 ### Configuration
+First, you need copy file of the first block to node 2. For example you can do it via scp:
+```
+$ scp user@10.10.99.1:/opt/apla/go-genesis/node1/firstblock /opt/apla/go-genesis/node2/
+```
+Create Node2 configuration file:
+```
+$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node2 --firstBlock=node2/firstblock --dbName=genesis2 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000 --httpHost=10.10.99.2 --tcpHost=10.10.99.2 --nodesAddr=10.10.99.1
+```
+Generate Node2 keys:
+```
+$ ./go-genesis generateKeys --config=node2/config.toml
+```
+
+Initialize database:
+```
+$ ./go-genesis initDatabase --config=node2/config.toml
+```
+Now you can start Node2:
+```
+$ ./go-genesis start --config=node2/config.toml 
+```
+There are a lot of errors will be displayed, and it's normal. If you start node with log level "INFO", you'll see that node start downloaded blocks.
 
 ### Add keys
+Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
 
 ### Create connection between nodes
 
