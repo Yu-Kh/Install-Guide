@@ -242,8 +242,10 @@ $ ./go-genesis start --config=node2/config.toml
 ```
 There are a lot of errors will be displayed, and it's normal. If you start node with log level "INFO", you'll see that node start downloaded blocks.
 
-### Add keys
+### Adding keys
 Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
+
+
 
 ### Create connection between nodes
 
