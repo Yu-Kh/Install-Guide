@@ -261,11 +261,68 @@ Where:
 ```
 $ python updatekeys.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c502a23f2 10.10.99.1 7079 -5910245696104921893 1812246837170b6df8609fd9d846a0984f4e5b3ee9037717e39dc38c82ea1a8e528c9e6f6acdc06b2a33f228c4d2649005bde47af857f3f756aaf64d3f1648dd 1000000000000000000000
 ```
-This script create contract which add the second node public key to the table 'keys' of database.
+This script will create contract which add the second node public key to the table 'keys' of database.
 
 ### Create connection between nodes
+Next, you should change create connection between nodes. For this, you should download this script [newValToFullNodes.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/newValToFullNodes.py). All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
+```
+$ python newValToFullNodes.py PrivateKey1 Host1 Port1 'NewValue'
+```
+Where:
+- PrivateKey1 - founder private key, located in the file PrivateKey of the first node
+- Host1 - IP-addres or DNS-name of the first node
+- Port1 - the first node API-server port
+- NewValue - new value of Full_Nodes parameter
+
+Argument **NewValue** must be written in json format:
+```
+[
+ {
+  "tcp_address":"Host1:tcpPort1", 
+  "api_address":"http://Host1:httpPort1", 
+  "key_id":"KeyID1", 
+  "public_key":"NodePubKey1"
+ },
+ {
+  "tcp_address":"Host2:tcpPort2", 
+  "api_address":"http://Host2:httpPort2", 
+  "key_id":"KeyID2", 
+  "public_key":"NodePubKey2"
+ },
+ {
+  "tcp_address":"HostN:tcpPortN", 
+  "api_address":"http://HostN:httpPortN", 
+  "key_id":"KeyIDN", 
+  "public_key":"NodePubKeyN"
+ }
+]
+```
+Where:
+- Host1 - IP-addres or DNS-name of the first node
+- tcpPort1 - the first node TCP-server port
+- httpPort1 - the first node API-server port
+- KeyID1 - content of file KeyID of the first node
+- NodePubKey1 - content of file NodePublicKey of the first node
+- Host2 - IP-addres or DNS-name of the second node
+- tcpPort2 - the second node TCP-server port
+- httpPort2 - the second node API-server port
+- KeyID2 - content of file KeyID of the second node
+- NodePubKey2 - content of file NodePublicKey of the second node
+- HostN - IP-addres or DNS-name of node N
+- tcpPortN - node N TCP-server port
+- httpPortN - node N API-server port
+- KeyIDN - content of file KeyID of node N
+- NodePubKeyN - content of file NodePublicKey of node N
+
+**Example:**
+```
+$ python newValToFullNodes.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c502a23f2 10.10.99.1 7079 '[{"tcp_address":"10.10.99.1:7078","api_address":"http://10.10.99.1:7079","key_id":"5541394763743537703","public_key":"d26824d0e94894bae9e983e7a386a1c9e4f609990d4b635b6926b52c831d6ec28b95f75acf0c9d10ee96afc0dd02617f08fea225706f0e502d5fe26587023e3b"},{"tcp_address":"10.10.99.2:7078","api_address":"http://10.10.99.2:7079","key_id":"6404048169476933259","public_key":"afd9ed260ec65a2a294794285ad40c5edc219e3be2455a044e2444111b8525815b224fdb369aa17307434d0e6aca8f9c959f823756baeb9ccb105f96f996bf11" }, {"tcp_address":"10.10.99.3:7078","api_address":"http://10.10.99.3:7079","key_id":"-5910245696104921893","public_key":"254c38cd6d9f47ffc42a8d178bb47f9a0cbc46ec6ef4d972c05146bfe87a8da03cb3450b71b2a724fdb2184163ae91023931c9fe5f148f0bdceeeefc5a16fe58"}]'
+```
+Now, all nodes are connected to each other.
 
 ## Work with system
-
+To work with Apla Platform you shoul use Molis client.
 ### Login as Founder
+Under development
 ### Create wallet
+Under development
