@@ -207,7 +207,7 @@ If you did not create these services, you can just execute binary files from its
 
 First, execute centrifugo file:
 ```
-$ cd /opt/apla/centrifugo && ./centrifugo -a localhost --config=config.json
+$ cd /opt/apla/centrifugo && ./centrifugo -a Node_IP-address --config=config.json
 ```
 Then, in another console execute go-genesis file:
 ```
