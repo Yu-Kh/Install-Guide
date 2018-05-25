@@ -1,5 +1,6 @@
-# Getting Started
+# Getting Started Guide
 ## Software Prerequisites
+This guide is based on Debian 9 (Stretch) [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI.
 ### Install sudo
 All commands in this guide should be run as non root user. But some system commands need superuser privileges to be executed.
 By default sudo is not installed on Debian 9, and first, you should install it.
