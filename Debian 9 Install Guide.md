@@ -240,12 +240,28 @@ Now you can start Node2:
 ```
 $ ./go-genesis start --config=node2/config.toml 
 ```
-There are a lot of errors will be displayed, and it's normal. If you start node with log level "INFO", you'll see that node start downloaded blocks.
+You should Ignore showed errors. If you start node with log level "INFO", you'll see that node start downloaded blocks.
 
 ### Adding keys
 Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
 
+To adding keys you should download this script [updateKeys.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/updateKeys.py). All keys that you are need are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
+```
+$ python updateKeys.py PrivateKey1 Host1 Port1 KeyID2 PublicKey2 balance
+```
+Where:
+- PrivateKey1 - founder private key, located in the file PrivateKey of the first node
+- Host1 - IP-addres or DNS-name of the first node
+- Port1 - the first node API-server port
+- KeyID2 - content of file KeyID of the second node
+- PublicKey2 - content of file PublicKey of the second node
+- balance - set wallet balance of the second node
 
+**Example:**
+```
+$ python updatekeys.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c502a23f2 10.10.99.1 7079 -5910245696104921893 1812246837170b6df8609fd9d846a0984f4e5b3ee9037717e39dc38c82ea1a8e528c9e6f6acdc06b2a33f228c4d2649005bde47af857f3f756aaf64d3f1648dd 1000000000000000000000
+```
+This script create contract which add the second node public key to the table 'keys' of database.
 
 ### Create connection between nodes
 
