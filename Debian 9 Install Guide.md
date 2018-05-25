@@ -245,7 +245,7 @@ You should Ignore showed errors. If you start node with log level "INFO", you'll
 ### Adding keys
 Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
 
-To adding keys you should download this script [updateKeys.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/updateKeys.py). All keys that you are need are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
+To adding keys you should download this script [updateKeys.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/updateKeys.py). All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
 ```
 $ python updateKeys.py PrivateKey1 Host1 Port1 KeyID2 PublicKey2 balance
 ```
