@@ -76,7 +76,7 @@ Create node current state database (by default, the first node have database nam
 $ sudo -u postgres psql -c "CREATE DATABASE genesis1"
 ```
 ## Install prerequisites via script
-This section under development
+Under development
 
 # Apla Blockchain Platform
 Apla Blockchain Platform consists of three main components:
@@ -105,9 +105,9 @@ Create go-genesis and node1 directories:
 $ mkdir go-genesis && cd go-genesis && mkdir node1
 ```
 Download latest release of Go-Genesis from [GitHub](https://github.com/GenesisKernel/go-genesis/releases) and copy it into go-genesis directory:
-```
-under development
-```
+
+Under development
+
 Usage and flags of go-genesis are described in [documentation]().
 
 Create Node1 configuration file:
@@ -321,7 +321,7 @@ $ python newValToFullNodes.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c77
 Now, all nodes are connected to each other.
 
 ## Work with system
-To work with Apla Platform you shoul use Molis client.
+To work with Apla Platform you should use Molis client.
 ### Login as Founder
 Under development
 ### Create wallet
