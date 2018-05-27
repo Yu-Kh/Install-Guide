@@ -333,7 +333,7 @@ Now, all nodes are connected to each other.
 To work with Apla Platform you should use Molis client.
 
 ### Login as Founder
-To obtain system administrator rights on your ecosystem, you should login as node founder. To do this, first, you must obtain the private key of the founder that was generated during the installation of the node. This key contains in the file 'PrivateKey', located in node configuration directory (in this guide it is located in directory  '/node1').
+To obtain system administrator rights on your ecosystem, you should login as ecosystem founder (Node 1 founder). To do this, first, you must obtain the private key of the founder that was generated during the installation of the node. This key contains in the file 'PrivateKey', located in node configuration directory (in this guide it is located in directory  '/node1').
 
 Next, in the Molis client in account options you should choose item 'Import existing key'.
 
@@ -342,7 +342,11 @@ In next window, Import account, you should copy your founder's private key in fi
 Now, in accounts list you can see your founder's account.
 
 ### Create wallet
-Under development
+To create wallet, in the Molis client in account options you should choose item 'Generate new key'.
+
+Invent new account seed phrase or generate it and set new user password.
+
+Now, in accounts list you can see your user's account.
 
 ## Test your system
 Under development
