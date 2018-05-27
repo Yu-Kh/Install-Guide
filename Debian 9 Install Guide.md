@@ -1,6 +1,6 @@
 # Getting Started Guide
 ## Software Prerequisites
-This guide is based on Debian 9 (Stretch) [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI.
+This guide is based on Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI.
 ### Install sudo
 All commands in this guide should be run as non root user. But some system commands need superuser privileges to be executed.
 By default sudo is not installed on Debian 9, and first, you should install it.
@@ -76,6 +76,13 @@ Create node current state database (by default, the first node have database nam
 ```
 $ sudo -u postgres psql -c "CREATE DATABASE genesis1"
 ```
+### OS Firewall Requirements
+By default, after installing Debian 9, there are no firewall rules. But, if you want to design more secure system with firewall, next incoming connections should be allowed:
+- 7078/TCP - Node's TCP-server
+- 7079/TCP - Node's API-server
+- 8000/TCP - Centrifugo server
+
+
 ## Install prerequisites via script
 Under development
 
@@ -105,11 +112,11 @@ Create go-genesis and node1 directories:
 ```
 $ mkdir go-genesis && cd go-genesis && mkdir node1
 ```
-Download latest release of Go-Genesis from [GitHub](https://github.com/GenesisKernel/go-genesis/releases) and copy it into go-genesis directory:
-
-Under development
-
-Usage and flags of go-genesis are described in [documentation]().
+Download and buid latest release of Go-Genesis from [GitHub](https://github.com/GenesisKernel/go-genesis/releases) and copy it into go-genesis directory:
+```
+$ go get -v github.com/GenesisKernel/go-genesis && cd /opt/apla && mv bin/go-genesis go-genesis/ && rm -rf bin/ && rm -rf src/
+```
+Usage and flags of go-genesis are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/).
 
 Create Node1 configuration file:
 ```
@@ -178,6 +185,7 @@ Then desktop app must be packed to the AppImage:
 $ yarn release --publish never –l
 ```
 After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
+
 #### Build Molis Web App
 Create settings.json file as its described in Build Molis Desktop App section.
 
@@ -327,3 +335,5 @@ To work with Apla Platform you should use Molis client.
 Under development
 ### Create wallet
 Under development
+
+## Test your system
