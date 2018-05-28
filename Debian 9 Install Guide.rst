@@ -259,10 +259,12 @@ can do it via scp:
 
    $ scp user@10.10.99.1:/opt/apla/go-genesis/node1/firstblock /opt/apla/go-genesis/node2/
 
-Create Node2 configuration file: \``\` $ ./go-genesis config
-–dataDir=/opt/apla/go-genesis/node2 –firstBlock=node2/firstblock
-–dbName=genesis2 –privateBlockchain=true –centSecret=“CENT_SECRET”
-–centUrl=http://localhost:8000 –httpHost=10.10.99.2
+Create Node2 configuration file: 
+
+::
+
+$ ./go-genesis config –dataDir=/opt/apla/go-genesis/node2 –firstBlock=node2/firstblock –dbName=genesis2 –privateBlockchain=true –centSecret=“CENT_SECRET” –centUrl=http://localhost:8000 –httpHost=10.10.99.2
+
 
 .. _GitHub: https://github.com/centrifugal/centrifugo/releases/
 .. _documentation: http://genesiskernel.readthedocs.io/en/latest/
