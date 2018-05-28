@@ -3,7 +3,7 @@
 This guide is based on Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI.
 ### Install sudo
 All commands in this guide should be run as non root user. But some system commands need superuser privileges to be executed.
-By default sudo is not installed on Debian 9, and first, you should install it.
+By default, sudo is not installed on Debian 9, and first, you should install it.
 
 Become root superuser:
 ```
@@ -68,11 +68,11 @@ Remove temporary file:
 $ rm go1.10.1.linux-amd64.tar.gz
 ```
 ### Setup PostgreSQL
-Change user's password postgres to Apla's default (you can set your own password, but also you must change it in node configuration file):
+Change user's password postgres to Apla's default (you can set your own password, but also you must change it in node configuration file ‘config.toml’):
 ```
 $ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'genesis'"
 ```
-Create node current state database (by default, the first node have database named genesis1, the second one genesis2 and etc):
+Create node current state database, for example ‘genesis1’:
 ```
 $ sudo -u postgres psql -c "CREATE DATABASE genesis1"
 ```
@@ -86,13 +86,13 @@ By default, after installing Debian 9, there are no firewall rules. But, if you 
 ## Install prerequisites via script
 Under development
 
-# Apla Blockchain Platform
-Apla Blockchain Platform consists of three main components:
-- Centrifugo (notification server)
-- Go-Genesis (kernel of the Apla's node, contains TCP-server and API-server)
-- Molis (frontend client)
+# Backend Install
+Apla Blockchain Platform’s backend consists of two main components:
+•	Centrifugo (notification server)
+•	Go-Genesis (kernel of the Apla's node, contains TCP-server and API-server)
 
-In this guide all of this components are deployed on one host, but in production environment you can deploy them on different hosts.
+In this guide, all of these components are deployed on one host, but in production environment, you can deploy them on different hosts.
+
 ## First Node Deployment
 ### Install Centrifugo
 Download Centrifugo version 1.7.9 from [GitHub](https://github.com/centrifugal/centrifugo/releases/) or via command line:
@@ -103,7 +103,7 @@ Remove temporary files:
 ```
 $ rm -R centrifugo-1.7.9-linux-amd64 && rm centrifugo-1.7.9-linux-amd64.zip
 ```
-Create Centrifugo configuration file (you can set your own "secret", but also you must change it in node configuration file):
+Create Centrifugo configuration file (you can set your own "secret", but also you must change it in node configuration file ‘config.toml’):
 ```
 $ echo '{"secret":"CENT_SECRET"}' > centrifugo/config.json
 ```
@@ -134,75 +134,6 @@ Initialize database:
 ```
 $ ./go-genesis initDatabase --config=node1/config.toml
 ```
-### Build Molis App
-For building Molis application you need install Yarn package manager. Download Yarn version 1.6.0 from [GitHub](https://github.com/yarnpkg/yarn/releases) or via command line:
-```
-$ cd /opt/apla &&  wget https://github.com/yarnpkg/yarn/releases/download/v1.6.0/yarn_1.6.0_all.deb
-```
-Install Yarn:
-```
-$ sudo dpkg -i yarn_1.6.0_all.deb && rm yarn_1.6.0_all.deb
-```
-Download latest release of Genesis-Front (Molis) from [GitHub](https://github.com/GenesisKernel/genesis-front) via git:
-```
-$ git clone https://github.com/GenesisKernel/genesis-front.git
-```
-Install Genesis-Front dependencies via Yarn:
-```
-$ cd genesis-front/ && yarn install
-```
-Molis client can be build via three technical implementations:
-- Desktop Application
-- Web Application
-- Mobile Application
-
-#### Build Molis Desktop App
-Create settings.json file which contains connections information about full nodes:
-```
-$ cp public/settings.json.dist public/settings.json
-```
-Edit settings.json file by any text editor and add required settings in next format:
-```
-http://Node_IP-address:Node_HTTP-Port
-```
-
-**Example** settings.json for three nodes:
-```
-{
-    "fullNodes": [
-        "http://10.10.99.1:7079",
-        "http://10.10.99.2:7079",
-        "http://10.10.99.3:7079"
-    ]
-}
-```
-Build desktop app by Yarn:
-```
-$ cd /opt/apla/genesis-front && yarn build-desktop
-```
-Then desktop app must be packed to the AppImage:
-```
-$ yarn release --publish never –l
-```
-After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
-
-#### Build Molis Web App
-Create settings.json file as its described in Build Molis Desktop App section.
-
-Build web app:
-```
-$ cd /opt/apla/genesis-front/ && yarn build
-```
-After building, redistributable files will be placed to the '/build' directory. You can serve it with any web-server of your choice. Settings.json file must be also placed there. It is woth noting that you shouldn't buld your application again if your connection settings will change. Just edit settings.json file and restart web-server.
-
-For development or testing purposes you can simple build Yarn's web-server:
-```
-$ sudo yarn global add serve && serve -s build
-```
-After this, your Molis Web App will be accessed at: ht&#8203;tp://localhost:5000
-
-#### Build Molis Mobile App
-Under development
 
 ### Create Services
 Under development
@@ -225,10 +156,10 @@ $ cd /opt/apla/go-genesis/ && ./go-genesis start --config=node1/config.toml
 Now, you can connecting to your node via Molis App.
 
 ## Other Nodes Deployment
-Deployment of the second node and others is similar to the first node, but has some differences in creation of go-genesis config.toml file.
+Deployment of the second node and others is similar to the first node, but has some differences in creation of go-genesis ‘config.toml’ file.
 
 ### Configuration
-First, you need copy file of the first block to node 2. For example you can do it via scp:
+First, you need copy file of the first block to Node 2. For example you can do it via scp:
 ```
 $ scp user@10.10.99.1:/opt/apla/go-genesis/node1/firstblock /opt/apla/go-genesis/node2/
 ```
@@ -254,7 +185,7 @@ You should Ignore showed errors. If you start node with log level "INFO", you'll
 ### Adding keys
 Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
 
-To adding keys you should download this script [updateKeys.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/updateKeys.py). All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
+To adding keys you should download this script updateKeys.py. All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
 ```
 $ python updateKeys.py PrivateKey1 Host1 Port1 KeyID2 PublicKey2 balance
 ```
@@ -273,7 +204,7 @@ $ python updatekeys.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c5
 This script will create contract which add the second node public key to the table 'keys' of database.
 
 ### Create connection between nodes
-Next, you should change create connection between nodes. For this, you should download this script [newValToFullNodes.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/newValToFullNodes.py). All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
+Next, you should create connection between nodes. For this, you should download this script newValToFullNodes.py. All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
 ```
 $ python newValToFullNodes.py PrivateKey1 Host1 Port1 'NewValue'
 ```
@@ -329,11 +260,84 @@ $ python newValToFullNodes.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c77
 ```
 Now, all nodes are connected to each other.
 
+# Frontend Install
+To work with the system you should build and use frontend Molis client.
+
+## Build Molis App
+For building Molis application you need install Yarn package manager. Download Yarn version 1.6.0 from [GitHub](https://github.com/yarnpkg/yarn/releases) or via command line:
+```
+$ cd /opt/apla &&  wget https://github.com/yarnpkg/yarn/releases/download/v1.6.0/yarn_1.6.0_all.deb
+```
+Install Yarn:
+```
+$ sudo dpkg -i yarn_1.6.0_all.deb && rm yarn_1.6.0_all.deb
+```
+Download latest release of Genesis-Front (Molis) from [GitHub](https://github.com/GenesisKernel/genesis-front) via git:
+```
+$ git clone https://github.com/GenesisKernel/genesis-front.git
+```
+Install Genesis-Front dependencies via Yarn:
+```
+$ cd genesis-front/ && yarn install
+```
+Molis client can be build via three technical implementations:
+- Desktop Application
+- Web Application
+- Mobile Application
+
+### Build Molis Desktop App
+Create settings.json file which contains connections information about full nodes:
+```
+$ cp public/settings.json.dist public/settings.json
+```
+Edit settings.json file by any text editor and add required settings in next format:
+```
+http://Node_IP-address:Node_HTTP-Port
+```
+
+**Example** settings.json for three nodes:
+```
+{
+    "fullNodes": [
+        "http://10.10.99.1:7079",
+        "http://10.10.99.2:7079",
+        "http://10.10.99.3:7079"
+    ]
+}
+```
+Build desktop app by Yarn:
+```
+$ cd /opt/apla/genesis-front && yarn build-desktop
+```
+Then desktop app must be packed to the AppImage:
+```
+$ yarn release --publish never –l
+```
+After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
+
+### Build Molis Web App
+Create settings.json file as its described in Build Molis Desktop App section.
+
+Build web app:
+```
+$ cd /opt/apla/genesis-front/ && yarn build
+```
+After building, redistributable files will be placed to the '/build' directory. You can serve it with any web-server of your choice. Settings.json file must be also placed there. It is woth noting that you shouldn't buld your application again if your connection settings will change. Just edit settings.json file and restart web-server.
+
+For development or testing purposes you can simple build Yarn's web-server:
+```
+$ sudo yarn global add serve && serve -s build
+```
+After this, your Molis Web App will be accessed at: ht&#8203;tp://localhost:5000
+
+### Build Molis Mobile App
+Under development
+
 ## Work with system
-To work with Apla Platform you should use Molis client.
+After building Molis App, you can obtain access to the system by selected user.
 
 ### Login as Founder
-To obtain system administrator rights on your ecosystem, you should login as ecosystem founder (Node 1 founder). To do this, first, you must obtain the private key of the founder that was generated during the installation of the node. This key contains in the file 'PrivateKey', located in node configuration directory (in this guide it is located in directory  '/node1').
+To obtain system administrator rights on your ecosystem, you should login as ecosystem founder (Node 1 founder). To do this, first, you must obtain the private key of the founder that was generated during the installation of the node. This key contains in the 'PrivateKey' file, located in node configuration directory (in this guide it is located in directory '/node1').
 
 Next, in the Molis client in account options you should choose item 'Import existing key'.
 
