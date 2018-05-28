@@ -153,7 +153,7 @@ production environment, you can deploy them on different hosts.
 2.1.1 Install Centrifugo
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Download Centrifugo version 1.7.9 from `GitHub`_ or via command line:
+Download Centrifugo version 1.7.9 from `Centrifugo GitHub`_ or via command line:
 
 ::
 
@@ -181,9 +181,7 @@ Create go-genesis and node1 directories:
 
    $ mkdir go-genesis && cd go-genesis && mkdir node1
 
-Download and buid latest release of Go-Genesis from
-`GitHub <https://github.com/GenesisKernel/go-genesis/releases>`__ and
-copy it into go-genesis directory:
+Download and buid latest release of Go-Genesis from `Go-Genesis GitHub`_ and copy it into go-genesis directory:
 
 ::
 
@@ -265,8 +263,8 @@ Create Node2 configuration file:
 
 $ ./go-genesis config –dataDir=/opt/apla/go-genesis/node2 –firstBlock=node2/firstblock –dbName=genesis2 –privateBlockchain=true –centSecret=“CENT_SECRET” –centUrl=http://localhost:8000 –httpHost=10.10.99.2
 
-
-.. _GitHub: https://github.com/centrifugal/centrifugo/releases/
+.. _Go-Genesis GitHub: https://github.com/GenesisKernel/go-genesis/releases/
+.. _Centrifugo GitHub: https://github.com/centrifugal/centrifugo/releases/
 .. _documentation: http://genesiskernel.readthedocs.io/en/latest/
 .. _official distributive: https://www.debian.org/CD/http-ftp/#stable
 .. _official site: https://nodejs.org/en/download/
@@ -371,3 +369,122 @@ Where:
    $ python newValToFullNodes.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c502a23f2 10.10.99.1 7079 '[{"tcp_address":"10.10.99.1:7078","api_address":"http://10.10.99.1:7079","key_id":"5541394763743537703","public_key":"d26824d0e94894bae9e983e7a386a1c9e4f609990d4b635b6926b52c831d6ec28b95f75acf0c9d10ee96afc0dd02617f08fea225706f0e502d5fe26587023e3b"},{"tcp_address":"10.10.99.2:7078","api_address":"http://10.10.99.2:7079","key_id":"6404048169476933259","public_key":"afd9ed260ec65a2a294794285ad40c5edc219e3be2455a044e2444111b8525815b224fdb369aa17307434d0e6aca8f9c959f823756baeb9ccb105f96f996bf11" }, {"tcp_address":"10.10.99.3:7078","api_address":"http://10.10.99.3:7079","key_id":"-5910245696104921893","public_key":"254c38cd6d9f47ffc42a8d178bb47f9a0cbc46ec6ef4d972c05146bfe87a8da03cb3450b71b2a724fdb2184163ae91023931c9fe5f148f0bdceeeefc5a16fe58"}]'
 
 Now, all nodes are connected to each other.
+
+3. Frontend Install
+===================
+
+To work with the system you should build and use frontend Molis client.
+
+3.2 Build Molis App
+-------------------
+
+For building Molis application you need install Yarn package manager.
+Download Yarn version 1.6.0 from `Yarn GitHub`_ or via command line:
+
+.. _Yarn GitHub: https://github.com/yarnpkg/yarn/releases
+
+::
+
+   $ cd /opt/apla &&  wget https://github.com/yarnpkg/yarn/releases/download/v1.6.0/yarn_1.6.0_all.deb
+
+Install Yarn:
+
+::
+
+   $ sudo dpkg -i yarn_1.6.0_all.deb && rm yarn_1.6.0_all.deb
+
+Download latest release of Genesis-Front (Molis) from
+`GitHub <https://github.com/GenesisKernel/genesis-front>`__ via git:
+
+.. _Genesis-Front GitHub: https://github.com/GenesisKernel/genesis-front
+
+::
+
+   $ git clone https://github.com/GenesisKernel/genesis-front.git
+
+Install Genesis-Front dependencies via Yarn:
+
+::
+
+   $ cd genesis-front/ && yarn install
+
+Molis client can be build via three technical implementations: - Desktop
+Application - Web Application - Mobile Application
+
+3.2.1 Build Molis Desktop App
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create settings.json file which contains connections information about
+full nodes:
+
+::
+
+   $ cp public/settings.json.dist public/settings.json
+
+Edit settings.json file by any text editor and add required settings in
+next format:
+
+::
+
+   http://Node_IP-address:Node_HTTP-Port
+
+**Example** settings.json for three nodes:
+
+::
+
+   {
+       "fullNodes": [
+           "http://10.10.99.1:7079",
+           "http://10.10.99.2:7079",
+           "http://10.10.99.3:7079"
+       ]
+   }
+
+Build desktop app by Yarn:
+
+::
+
+   $ cd /opt/apla/genesis-front && yarn build-desktop
+
+Then desktop app must be packed to the AppImage:
+
+::
+
+   $ yarn release --publish never –l
+
+After that, your application will be ready to use, but its connection
+settings can not be changed in the future. If these settings will
+change, you must build a new version of the application.
+
+3.2.2 Build Molis Web App
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create settings.json file as its described in Build Molis Desktop App
+section.
+
+Build web app:
+
+::
+
+   $ cd /opt/apla/genesis-front/ && yarn build
+
+After building, redistributable files will be placed to the ‘/build’
+directory. You can serve it with any web-server of your choice.
+Settings.json file must be also placed there. It is woth noting that you
+shouldn’t buld your application again if your connection settings will
+change. Just edit settings.json file and restart web-server.
+
+For development or testing purposes you can simple build Yarn’s
+web-server:
+
+::
+
+   $ sudo yarn global add serve && serve -s build
+
+After this, your Molis Web App will be accessed at:
+ht​tp://localhost:5000
+
+3.3.3 Build Molis Mobile App
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Under development
