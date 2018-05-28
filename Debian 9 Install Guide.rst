@@ -265,6 +265,7 @@ To adding keys you should download this script updateKeys.py. All information th
    $ python updateKeys.py PrivateKey1 Host1 Port1 KeyID2 PublicKey2 balance
 
 Where:
+
 - PrivateKey1 - founder private key, located in the file 'PrivateKey' of the first node 
 - Host1 - IP-addres or DNS-name of the first node 
 - Port1 - the first node API-server port
@@ -290,6 +291,7 @@ Next, you should create connection between nodes. For this, you should download 
    $ python newValToFullNodes.py PrivateKey1 Host1 Port1 'NewValue'
 
 Where:
+
 - PrivateKey1 - founder private key, located in the file PrivateKey of the first node
 - Host1 - IP-addres or DNS-name of the first node
 - Port1 - the first node API-server port
