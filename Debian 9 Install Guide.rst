@@ -394,7 +394,7 @@ Install Yarn:
    $ sudo dpkg -i yarn_1.6.0_all.deb && rm yarn_1.6.0_all.deb
 
 Download latest release of Genesis-Front (Molis) from
-`GitHub <https://github.com/GenesisKernel/genesis-front>`__ via git:
+`Genesis-Front GitHub`_ via git:
 
 .. _Genesis-Front GitHub: https://github.com/GenesisKernel/genesis-front
 
