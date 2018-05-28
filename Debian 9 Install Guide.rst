@@ -147,5 +147,124 @@ node, contains TCP-server and API-server)
 In this guide, all of these components are deployed on one host, but in
 production environment, you can deploy them on different hosts.
 
+2.1 First Node Deployment
+-------------------------
+
+2.1.1 Install Centrifugo
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Download Centrifugo version 1.7.9 from `GitHub`_ or via command line:
+
+::
+
+   $ wget https://github.com/centrifugal/centrifugo/releases/download/v1.7.9/centrifugo-1.7.9-linux-amd64.zip && unzip centrifugo-1.7.9-linux-amd64.zip && mkdir centrifugo && mv centrifugo-1.7.9-linux-amd64/* centrifugo/
+
+Remove temporary files:
+
+::
+
+   $ rm -R centrifugo-1.7.9-linux-amd64 && rm centrifugo-1.7.9-linux-amd64.zip
+
+Create Centrifugo configuration file (you can set your own “secret”, but
+also you must change it in node configuration file ‘config.toml’):
+
+::
+
+   $ echo '{"secret":"CENT_SECRET"}' > centrifugo/config.json
+
+2.1.2 Install Go-Genesis
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create go-genesis and node1 directories:
+
+::
+
+   $ mkdir go-genesis && cd go-genesis && mkdir node1
+
+Download and buid latest release of Go-Genesis from
+`GitHub <https://github.com/GenesisKernel/go-genesis/releases>`__ and
+copy it into go-genesis directory:
+
+::
+
+   $ go get -v github.com/GenesisKernel/go-genesis && cd /opt/apla && mv bin/go-genesis go-genesis/ && rm -rf bin/ && rm -rf src/
+
+Usage and flags of go-genesis are described in `documentation`_.
+
+Create Node1 configuration file:
+
+::
+
+   $ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
+
+Generate Node1 keys:
+
+::
+
+   $ ./go-genesis generateKeys --config=node1/config.toml
+
+Generate first block:
+
+::
+
+   $ ./go-genesis generateFirstBlock --config=node1/config.toml
+
+Initialize database:
+
+::
+
+   $ ./go-genesis initDatabase --config=node1/config.toml
+
+2.1.3 Create Services
+~~~~~~~~~~~~~~~~~~~~~
+
+Under development
+
+2.1.4 Start First Node
+~~~~~~~~~~~~~~~~~~~~~~
+
+For starting first node you should start two services: - centrifugo -
+go-genesis
+
+If you did not create these services, you can just execute binary files
+from its directories in different consoles.
+
+First, execute centrifugo file:
+
+::
+
+   $ cd /opt/apla/centrifugo && ./centrifugo -a Node_IP-address --config=config.json
+
+Then, in another console execute go-genesis file:
+
+::
+
+   $ cd /opt/apla/go-genesis/ && ./go-genesis start --config=node1/config.toml
+
+Now, you can connecting to your node via Molis App.
+
+2.2 Other Nodes Deployment
+--------------------------
+
+Deployment of the second node and others is similar to the first node,
+but has some differences in creation of go-genesis ‘config.toml’ file.
+
+2.2.1 Configuration
+~~~~~~~~~~~~~~~~~~~
+
+First, you need copy file of the first block to Node 2. For example you
+can do it via scp:
+
+::
+
+   $ scp user@10.10.99.1:/opt/apla/go-genesis/node1/firstblock /opt/apla/go-genesis/node2/
+
+Create Node2 configuration file: \``\` $ ./go-genesis config
+–dataDir=/opt/apla/go-genesis/node2 –firstBlock=node2/firstblock
+–dbName=genesis2 –privateBlockchain=true –centSecret=“CENT_SECRET”
+–centUrl=http://localhost:8000 –httpHost=10.10.99.2
+
+.. _GitHub: https://github.com/centrifugal/centrifugo/releases/
+.. _documentation: http://genesiskernel.readthedocs.io/en/latest/
 .. _official distributive: https://www.debian.org/CD/http-ftp/#stable
 .. _official site: https://nodejs.org/en/download/
