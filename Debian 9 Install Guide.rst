@@ -172,7 +172,7 @@ Create go-genesis and node1 directories:
 
    $ mkdir go-genesis && cd go-genesis && mkdir node1
 
-Download and buid latest release of Go-Genesis from `Go-Genesis GitHub <https://github.com/GenesisKernel/go-genesis/releases/>`_ and copy it into go-genesis directory:
+Download and buid latest release of Go-Genesis from `GitHub <https://github.com/GenesisKernel/go-genesis/releases/>`_ and copy it into go-genesis directory:
 
 ::
 
