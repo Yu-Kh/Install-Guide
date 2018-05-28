@@ -1,7 +1,8 @@
 # Getting Started Guide
-## Software Prerequisites
+
+# 1. Software Prerequisites
 This guide is based on Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI.
-### Install sudo
+## 1.1 Install sudo
 All commands in this guide should be run as non root user. But some system commands need superuser privileges to be executed.
 By default, sudo is not installed on Debian 9, and first, you should install it.
 
@@ -23,14 +24,14 @@ Add your user to sudo group:
 ```
 After the reboot, the changes take effect.
 
-### Install common software
+## 1.2 Install common software
 Some of used packages can be downloaded from the official Debian repository.
 Install packages:
 ```
 $ sudo apt install -y postgresql git curl apt-transport-https build-essential
 ```
 
-### Create Apla directory
+## 1.3 Create Apla directory
 All software used by Apla Blockchain Platform is recommended to store in a special directory.
 
 Make directory and go to it:
@@ -41,7 +42,7 @@ Make your user owner of this directory:
 ```
 $ sudo chown user /opt/apla/
 ```
-### Install Node.js
+## 1.4 Install Node.js
 Download Node.js LTS version 8.11 from the [official site](https://nodejs.org/en/download/) or via command line:
 ```
 $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash
@@ -50,7 +51,7 @@ Install Node.js:
 ```
 $ sudo apt install -y nodejs
 ```
-### Install Go Language
+## 1.5 Install Go Language
 Download Go latest stable version 1.10 from the [official site](https://golang.org/dl/) or via command line:
 ```
 $ wget https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz
@@ -67,7 +68,7 @@ Remove temporary file:
 ```
 $ rm go1.10.1.linux-amd64.tar.gz
 ```
-### Setup PostgreSQL
+## 1.6 Setup PostgreSQL
 Change user's password postgres to Apla's default (you can set your own password, but also you must change it in node configuration file ‘config.toml’):
 ```
 $ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'genesis'"
@@ -76,25 +77,21 @@ Create node current state database, for example ‘genesis1’:
 ```
 $ sudo -u postgres psql -c "CREATE DATABASE genesis1"
 ```
-### OS Firewall Requirements
+## 1.7 OS Firewall Requirements
 By default, after installing Debian 9, there are no firewall rules. But, if you want to design more secure system with firewall, next incoming connections should be allowed:
 - 7078/TCP - Node's TCP-server
 - 7079/TCP - Node's API-server
 - 8000/TCP - Centrifugo server
 
-
-## Install prerequisites via script
-Under development
-
-# Backend Install
+# 2. Backend Install
 Apla Blockchain Platform’s backend consists of two main components:
 •	Centrifugo (notification server)
 •	Go-Genesis (kernel of the Apla's node, contains TCP-server and API-server)
 
 In this guide, all of these components are deployed on one host, but in production environment, you can deploy them on different hosts.
 
-## First Node Deployment
-### Install Centrifugo
+## 2.1 First Node Deployment
+### 2.1.1 Install Centrifugo
 Download Centrifugo version 1.7.9 from [GitHub](https://github.com/centrifugal/centrifugo/releases/) or via command line:
 ```
 $ wget https://github.com/centrifugal/centrifugo/releases/download/v1.7.9/centrifugo-1.7.9-linux-amd64.zip && unzip centrifugo-1.7.9-linux-amd64.zip && mkdir centrifugo && mv centrifugo-1.7.9-linux-amd64/* centrifugo/
@@ -107,7 +104,7 @@ Create Centrifugo configuration file (you can set your own "secret", but also yo
 ```
 $ echo '{"secret":"CENT_SECRET"}' > centrifugo/config.json
 ```
-### Install Go-Genesis
+### 2.1.2 Install Go-Genesis
 Create go-genesis and node1 directories:
 ```
 $ mkdir go-genesis && cd go-genesis && mkdir node1
@@ -135,10 +132,10 @@ Initialize database:
 $ ./go-genesis initDatabase --config=node1/config.toml
 ```
 
-### Create Services
+### 2.1.3 Create Services
 Under development
 
-### Start First Node
+### 2.1.4 Start First Node
 For starting first node you should start two services:
 - centrifugo
 - go-genesis
@@ -155,10 +152,10 @@ $ cd /opt/apla/go-genesis/ && ./go-genesis start --config=node1/config.toml
 ```
 Now, you can connecting to your node via Molis App.
 
-## Other Nodes Deployment
+## 2.2 Other Nodes Deployment
 Deployment of the second node and others is similar to the first node, but has some differences in creation of go-genesis ‘config.toml’ file.
 
-### Configuration
+### 2.2.1 Configuration
 First, you need copy file of the first block to Node 2. For example you can do it via scp:
 ```
 $ scp user@10.10.99.1:/opt/apla/go-genesis/node1/firstblock /opt/apla/go-genesis/node2/
@@ -182,7 +179,7 @@ $ ./go-genesis start --config=node2/config.toml
 ```
 You should Ignore showed errors. If you start node with log level "INFO", you'll see that node start downloaded blocks.
 
-### Adding keys
+### 2.2.2 Adding keys
 Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
 
 To adding keys you should download this script updateKeys.py. All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
@@ -203,7 +200,7 @@ $ python updatekeys.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c5
 ```
 This script will create contract which add the second node public key to the table 'keys' of database.
 
-### Create connection between nodes
+### 2.2.3 Create connection between nodes
 Next, you should create connection between nodes. For this, you should download this script newValToFullNodes.py. All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
 ```
 $ python newValToFullNodes.py PrivateKey1 Host1 Port1 'NewValue'
@@ -260,10 +257,10 @@ $ python newValToFullNodes.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c77
 ```
 Now, all nodes are connected to each other.
 
-# Frontend Install
+# 3. Frontend Install
 To work with the system you should build and use frontend Molis client.
 
-## Build Molis App
+## 3.2 Build Molis App
 For building Molis application you need install Yarn package manager. Download Yarn version 1.6.0 from [GitHub](https://github.com/yarnpkg/yarn/releases) or via command line:
 ```
 $ cd /opt/apla &&  wget https://github.com/yarnpkg/yarn/releases/download/v1.6.0/yarn_1.6.0_all.deb
@@ -285,7 +282,7 @@ Molis client can be build via three technical implementations:
 - Web Application
 - Mobile Application
 
-### Build Molis Desktop App
+### 3.2.1 Build Molis Desktop App
 Create settings.json file which contains connections information about full nodes:
 ```
 $ cp public/settings.json.dist public/settings.json
@@ -315,7 +312,7 @@ $ yarn release --publish never –l
 ```
 After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
 
-### Build Molis Web App
+### 3.2.2 Build Molis Web App
 Create settings.json file as its described in Build Molis Desktop App section.
 
 Build web app:
@@ -330,13 +327,13 @@ $ sudo yarn global add serve && serve -s build
 ```
 After this, your Molis Web App will be accessed at: ht&#8203;tp://localhost:5000
 
-### Build Molis Mobile App
+### 3.3.3 Build Molis Mobile App
 Under development
 
-## Work with system
+# 4. Launching
 After building Molis App, you can obtain access to the system by selected user.
 
-### Login as Founder
+## 4.1 Login as Founder
 To obtain system administrator rights on your ecosystem, you should login as ecosystem founder (Node 1 founder). To do this, first, you must obtain the private key of the founder that was generated during the installation of the node. This key contains in the 'PrivateKey' file, located in node configuration directory (in this guide it is located in directory '/node1').
 
 Next, in the Molis client in account options you should choose item 'Import existing key'.
@@ -345,12 +342,9 @@ In next window, Import account, you should copy your founder's private key in fi
 
 Now, in accounts list you can see your founder's account.
 
-### Create wallet
+## 4.2 Create wallet
 To create wallet, in the Molis client in account options you should choose item 'Generate new key'.
 
 Invent new account seed phrase or generate it and set new user password.
 
 Now, in accounts list you can see your user's account.
-
-## Test your system
-Under development
