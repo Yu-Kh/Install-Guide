@@ -117,7 +117,7 @@ Usage and flags of go-genesis are described in [documentation](http://genesisker
 
 Create Node1 configuration file:
 ```
-$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://localhost:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
+$ ./go-genesis config --dataDir=/opt/apla/go-genesis/node1 --firstBlock=node1/firstblock --dbName=genesis1 --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.1:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
 ```
 Generate Node1 keys:
 ```
