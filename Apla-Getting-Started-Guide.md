@@ -249,7 +249,7 @@ You should ignore showed errors. If you start node with log level "INFO", you'll
 
 Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
 
-To adding keys you should download this script updateKeys.py. All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
+To adding keys you should download this script [updateKeys.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/updateKeys.py). All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges. Execute script with next arguments:
 ```
 $ python3 updateKeys.py PrivateKey1 Host1 Port1 KeyID2 PublicKey2 balance
 ```
@@ -271,7 +271,7 @@ This script will create contract, which add the second node public key to the ta
 
 #### Create connection between nodes
 
-Next, you should create connection between nodes. For this, you should download this script newValToFullNodes.py. All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges.
+Next, you should create connection between nodes. For this, you should download this script [newValToFullNodes.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/newValToFullNodes.py). All information that you are need to script execution are located in node's directory 'nodeN'. This scipt must be executed on the first node with founder's privileges.
 
 Execute script with next arguments:
 ```
@@ -414,9 +414,190 @@ In Windows Server firewall settings, you should allow next incoming connections:
 
 ### First Node Deployment <a name="first-node-deployment-win"></a>
 
+#### Install Centrifugo
+
+1) Download Centrifugo-1.7.9-windows-amd64.zip from [GitHub](https://github.com/centrifugal/centrifugo/releases/).
+
+2) Unzip archive to your Centrifugo folder inside Apla directory
+
+3) By any text editor, create Centrifugo configuration file ‘config.json’ in centrifugo directory. Add the following line to ‘config.json’ file:
+```
+{"secret":"CENT_SECRET"}
+```
+
+You can set your own "secret", but also you must change it in node configuration file ‘config.toml’.
+
+#### Install Go-Apla
+
+1) In Apla directory, create go-apla directory and node folder inside it.
+
+2) Download Go-Apla from [GitHub](https://github.com/AplaProject/go-apla/releases) or build latest release by command line:
+```
+> cd C:\Apla\go-apla
+> go get –v github.com/AplaProject/go-apla
+> go build github.com/AplaProject/go-apla
+```
+
+After that, ‘go-apla.exe’ file will appear in ‘go-apla’ directory.
+
+Usage and flags of ‘go-apla.exe’ file are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/).
+
+3) Create Node 1 ‘config.toml’ configuration file:
+```
+> go-apla.exe config --dataDir=C:\Apla\go-apla\node --dbName=apladb --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.1:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
+```
+4) Generate Node 1 keys:
+```
+> go-apla.exe generateKeys --config=node\config.toml
+```
+
+5) Generate first block:
+```
+> go-apla.exe generateFirstBlock --config=node\config.toml
+```
+
+6) Initialize database:
+```
+> go-apla.exe initDatabase --config=node\config.toml
+```
+
+#### Start First Node
+
+For starting first node you should start two services:
+
+-	centrifugo
+-	go-apla
+
+If you did not create these services, you can just execute .exe files from its directories in different command prompts.
+
+1) Run centrifugo.exe:
+```
+> centrifugo.exe -a 10.10.99.1 --config=config.json
+```
+
+2) Run go-apla.exe:
+```
+> go-apla.exe start --config=node\config.toml
+```
+
+Now, you can connecting to your node via Molis App.
+
 ### Other Nodes Deployment <a name="other-nodes-deployment-win"></a>
 
+Deployment of the second node and others is similar to the first node, but has some differences in creation of go-apla ‘config.toml’ file.
 
+#### Configuration
+
+1) Copy file of the first block to Node 2 in the same directory. Default location of the first block file you can see in ‘config.toml’ file.
+
+2) Create Node 2 ‘config.toml’ configuration file:
+```
+> go-apla.exe config --dataDir=C:\Apla\go-apla\node --dbName=apladb --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.2:8000 --httpHost=10.10.99.2 --tcpHost=10.10.99.2 --nodesAddr=10.10.99.1
+```
+
+3) Generate Node 2 keys:
+```
+> go-apla.exe generateKeys --config=node\config.toml
+```
+
+4) Initialize database:
+```
+> go-apla.exe initDatabase --config=node\config.toml
+```
+
+5) Start Node 2 services:
+```
+> centrifugo.exe -a 10.10.99.2 --config=config.json 
+> go-apla.exe start --config=node\config.toml
+```
+
+You should ignore showed errors. If you start node with log level "INFO", you'll see that node start downloaded blocks.
+
+#### Adding keys
+
+Errors that occurred above are caused by untrusted relationships between nodes. To fix it, you should add the second node public key to the first node.
+
+To adding keys you should download this script [updateKeys.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/updateKeys.py). All information that you are need to script execution are located in node's directory 'node'. This script must be executed on the first node with founder's privileges. Execute script with next arguments:
+```
+> py updateKeys.py PrivateKey1 Host1 Port1 KeyID2 PublicKey2 balance
+```
+
+Where:
+-	PrivateKey1 - founder private key, located in the file PrivateKey of the first node
+-	Host1 - IP-addres or DNS-name of the first node
+-	Port1 - the first node API-server port
+-	KeyID2 - content of file KeyID of the second node
+-	PublicKey2 - content of file PublicKey of the second node
+-	balance - set wallet balance of the second node
+
+**Example:**
+```
+>py updateKeys.py 0f1aaf0c76716f189a295a0edbeed05ae760c4cd0009bd337f19aea6a0d37d89 10.10.99.1 7079 839301472950762263 2ce37e8a3fbeadd3862e962267fa29c43c02b6d2fbab9360f7d2e988e1477c333aa06fd6d85a8999779f1314063bf2bd2a298ea1284d0284b1c1ea69870d3ba 1000000000000000000000
+```
+
+This script will create contract, which add the second node public key to the table 'keys' of database.
+
+#### Create connection between nodes
+
+Then you need to create a connection between the nodes. For this, you should download this script [newValToFullNodes.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/newValToFullNodes.py). All information that you are need to script execution are located in node's directory. This script must be executed on the first node with founder's privileges. Execute script with next arguments:
+```
+> py newValToFullNodes.py PrivateKey1 Host1 Port1 “NewValue”
+```
+
+Where:
+-	PrivateKey1 - founder private key, located in the file PrivateKey of the first node
+-	Host1 - IP-addres or DNS-name of the first node
+-	Port1 - the first node API-server port
+-	NewValue - new value of Full_Nodes parameter
+
+Argument **NewValue** must be written in json format:
+```
+[
+ {
+  "tcp_address":"Host1:tcpPort1", 
+  "api_address":"http://Host1:httpPort1", 
+  "key_id":"KeyID1", 
+  "public_key":"NodePubKey1"
+ },
+ {
+  "tcp_address":"Host2:tcpPort2", 
+  "api_address":"http://Host2:httpPort2", 
+  "key_id":"KeyID2", 
+  "public_key":"NodePubKey2"
+ },
+ {
+  "tcp_address":"HostN:tcpPortN", 
+  "api_address":"http://HostN:httpPortN", 
+  "key_id":"KeyIDN", 
+  "public_key":"NodePubKeyN"
+ }
+]
+```
+
+Where:
+
+- Host1 - IP-addres or DNS-name of the first node
+- tcpPort1 - the first node TCP-server port
+- httpPort1 - the first node API-server port
+- KeyID1 - content of file KeyID of the first node
+- NodePubKey1 - content of file NodePublicKey of the first node
+- Host2 - IP-addres or DNS-name of the second node
+- tcpPort2 - the second node TCP-server port
+- httpPort2 - the second node API-server port
+- KeyID2 - content of file KeyID of the second node
+- NodePubKey2 - content of file NodePublicKey of the second node
+- HostN - IP-addres or DNS-name of node N
+- tcpPortN - node N TCP-server port
+- httpPortN - node N API-server port
+- KeyIDN - content of file KeyID of node N
+- NodePubKeyN - content of file NodePublicKey of node N
+
+**Example:**
+```
+>py updateFullNode.py 0f1aaf0c76716f189a295a0edbeed05ae760c4cd0009bd337f19aea6a0d37d89 10.10.99.1 7079 "[{\"tcp_address\":\"10.10.99.1:7078\",\"api_address\":\"http://10.10.99.1:7079\",\"key_id\":\"4053339477525839986\",\"public_key\":\"d708bda3734e17822245d6477810ff28c150380abb9ae0271c5a49eca05be92fa7d80d0043e476ef936971288dd5df08b83370488182f524d789b919b398e70b\"},{\"tcp_address\":\"10.10.99.2:7078\",\"api_address\":\"http://10.10.99.2:7079\",\"key_id\":\"1647233376862283221\",\"public_key\":\"ed1bd2a29f607ca5529b353e8d6a9d998ebaca30a129a775b738b1bb0da4ff8afde9c6abdf208fd41fa4541cec471417705c7786ab69c359d36d822e8840815a\"},{\"tcp_address\":\"10.10.99.3:7078\",\"api_address\":\"http://10.10.99.3:7079\",\"key_id\":\"5700268145718545990\",\"public_key\":\"f653dd110e19abc259865397f14b1d866215fc4ea9abcaa246e620e750a3e26a46c5565bd6f2d19b4f18af10ccd8088bc62b7b2687b869bd542e91f2203ec164\"}]"
+```
+
+Now, all nodes are connected to each other.
 
 ## Frontend Install <a name="frontend-install"></a>
 
