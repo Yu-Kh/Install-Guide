@@ -787,3 +787,19 @@ After this, your Molis Web App will be accessed at http://localhost:3000
 After building Molis App, you can obtain access to the system by selected user.
 
 ### Login as Founder
+
+To obtain system administrator rights on your ecosystem, you should login as ecosystem founder (Node 1 founder). To do this, first, you must obtain the private key of the founder that was generated during the installation of the node. This key contains in the 'PrivateKey' file, located in node configuration directory.
+
+Next, in the Molis client in account options you should choose item 'Import existing key'.
+
+In next window, Import account, you should copy your founder's private key in field of account seed and set new founder password.
+
+Now, in accounts list you can see your founder's account.
+
+### Create wallet
+
+To create wallet, in the Molis client in account options you should choose item 'Generate new key'.
+
+Invent new account seed phrase or generate it and set new user password.
+
+Now, in accounts list you can see your user's account.
