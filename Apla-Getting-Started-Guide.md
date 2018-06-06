@@ -601,16 +601,189 @@ Now, all nodes are connected to each other.
 
 ## ***Frontend Install*** <a name="frontend-install"></a>
 
+Frontend of Apla Blockchain Platform consist from Molis client.
+
+First, to work with the system, you should build Molis client, then you can deploy it to your users.
+
+Molis client can be build via three technical implementations:
+
+-	Desktop Application
+-	Web Application
+-	Mobile Application
+
 ## Frontend Install for Debian <a name="frontend-install-deb"></a>
 
 ### Frontend Software Prerequisites <a name="frontend-software-prerequisites-deb"></a>
 
+#### Install Node.js
+
+1) Download Node.js LTS version 8.11 from the [official site](https://nodejs.org/en/download/) or via command line:
+```
+$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash
+```
+
+2) Install Node.js:
+```
+$ sudo apt install -y nodejs
+```
+
+#### Install Yarn
+
+1) Download Yarn version 1.7.0 from [GitHub](https://github.com/yarnpkg/yarn/releases) or via command line:
+```
+$ cd /opt/apla &&  wget https://github.com/yarnpkg/yarn/releases/download/v1.7.0/yarn_1.7.0_all.deb
+```
+
+2) Install Yarn:
+```
+$ sudo dpkg -i yarn_1.7.0_all.deb && rm yarn_1.7.0_all.deb
+```
+
 ### Build Molis App <a name="build-molis-app-deb"></a>
+
+1) Download latest release of Apla-Front (Molis) from [GitHub](https://github.com/AplaProject/apla-front) via git:
+```
+$ git clone https://github.com/AplaProject/apla-front.git
+```
+
+2) Install Apla-Front dependencies via Yarn:
+```
+$ cd apla-front/ && yarn install
+```
+
+#### Build Molis Desktop App
+
+1) Create ‘settings.json’ file, which contains connections information about full nodes:
+```
+$ cp public/settings.json.dist public/settings.json
+```
+
+2) Edit ‘settings.json’ file by any text editor and add required settings in next format:
+```
+http://Node_IP-address:Node_HTTP-Port
+```
+
+**Example** ‘settings.json’ file for three nodes:
+```
+{
+    "fullNodes": [
+        "http://10.10.99.1:7079",
+        "http://10.10.99.2:7079",
+        "http://10.10.99.3:7079"
+    ]
+}
+```
+
+3) Build desktop app by Yarn:
+```
+$ cd /opt/apla/apla-front && yarn build-desktop
+```
+
+4) Then desktop app must be packed to the AppImage:
+```
+$ yarn release --publish never –l
+```
+
+After that, your application will be ready to use, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
+
+#### Build Molis Web App
+
+1) Create ‘settings.json’ file as it is described in Build Molis Desktop App section.
+
+2) Build web app:
+```
+$ cd /opt/apla/apla-front/ && yarn build
+```
+
+After building, redistributable files will be placed to the '/build' directory. You can serve it with any web-server of your choice. ‘Settings.json’ file must be also placed there. It is worth noting that you shouldn't build your application again if your connection settings will change. Just edit ‘settings.json’ file and restart web-server.
+
+2') For development or testing purposes you can simple build Yarn's web-server:
+```
+$ sudo yarn global add serve && serve -s build
+```
+After this, your Molis Web App will be accessed at: http://localhost:5000
 
 ## Frontend Install for Windows <a name="frontend-install-win"></a>
 
 ### Frontend Software Prerequisites <a name="frontend-software-prerequisites-win"></a>
 
+#### Install Node.js
+
+1) Download Node.js LTS version 8.11 for Windows from the [official site](https://nodejs.org/en/download/).
+
+2) Install Node.js without any specific settings. All required environment variables will be installed during installation process.
+
+#### Install Yarn
+
+1) Download Yarn version 1.7.0 msi package from the [official site](https://yarnpkg.com/lang/en/docs/install/#windows-stable).
+
+2) Install Yarn msi package without any specific settings. All required environment variables will be installed during installation process.
+
 ### Build Molis App <a name="build-molis-app-win"></a>
 
+1) Download latest release of Apla-Front (Molis) from [GitHub](https://github.com/AplaProject/apla-front) via git:
+```
+> git clone https://github.com/AplaProject/apla-front.git
+```
+
+2) Install Apla-Front dependencies via Yarn:
+```
+> cd apla-front
+> yarn install
+```
+
+#### Build Molis Desktop App
+
+1) Create ‘settings.json’ file in ‘apla-front/public’ directory, which contains connections information about full nodes.
+
+2) Edit ‘settings.json’ file by any text editor and add required settings in next format:
+```
+http://Node_IP-address:Node_HTTP-Port
+```
+**Example** ‘settings.json’ file for three nodes:
+```
+{
+    "fullNodes": [
+        "http://10.10.99.1:7079",
+        "http://10.10.99.2:7079",
+        "http://10.10.99.3:7079"
+    ]
+}
+```
+
+3) Build desktop app by Yarn:
+```
+> yarn build-desktop
+```
+
+4) Release your build for Windows OS:
+```
+> yarn release --publish never –w
+```
+
+After that, your application will be ready to execute at ‘apla-front\releases’ directory, but its connection settings can not be changed in the future. If these settings will change, you must build a new version of the application.
+
+#### Build Molis Web App
+
+1) Create ‘settings.json’ file as it is described in Build Molis Desktop App section.
+
+2) Build web app:
+```
+> yarn build
+```
+
+After building, redistributable files will be placed to the '/build' directory. You can serve it with any web-server of your choice. ‘Settings.json’ file must be also placed there. It is worth noting that you shouldn't build your application again if your connection settings will change. Just edit ‘settings.json’ file and restart web-server.
+
+2')For development or testing purposes you can simple build Yarn's web-server:
+```
+> yarn global add serve
+> serve -s build
+```
+
+After this, your Molis Web App will be accessed at http://localhost:3000
+
 ## Launching <a name="launching"></a>
+
+After building Molis App, you can obtain access to the system by selected user.
+
+### Login as Founder
