@@ -12,10 +12,10 @@
         * [First Node Deployment](#first-node-deployment-win)
         * [Other Nodes Deployment](#other-nodes-deployment-win)
    * [Frontend Install](#frontend-install)
-      * [Frontend Install for Debian](#backend-install-deb)
+      * [Frontend Install for Debian](#frontend-install-deb)
         * [Frontend Software Prerequisites](#frontend-software-prerequisites-deb)
         * [Build Molis App](#build-molis-app-deb)
-      * [Frontend Install for Windows](#backend-install-win)
+      * [Frontend Install for Windows](#frontend-install-win)
         * [Frontend Software Prerequisites](#frontend-software-prerequisites-win)
         * [Build Molis App](#build-molis-app-win)
    * [Launching](#launching)
@@ -599,10 +599,18 @@ Where:
 
 Now, all nodes are connected to each other.
 
-## Frontend Install <a name="frontend-install"></a>
+## ***Frontend Install*** <a name="frontend-install"></a>
 
-### Frontend Software Prerequisites <a name="frontend-software-prerequisites"></a>
+## Frontend Install for Debian <a name="frontend-install-deb"></a>
 
-### Build Molis App <a name="build-molis-app"></a>
+### Frontend Software Prerequisites <a name="frontend-software-prerequisites-deb"></a>
+
+### Build Molis App <a name="build-molis-app-deb"></a>
+
+## Frontend Install for Windows <a name="frontend-install-win"></a>
+
+### Frontend Software Prerequisites <a name="frontend-software-prerequisites-win"></a>
+
+### Build Molis App <a name="build-molis-app-win"></a>
 
 ## Launching <a name="launching"></a>
