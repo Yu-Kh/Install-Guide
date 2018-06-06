@@ -29,15 +29,27 @@ Apla Blockchain Platform consists of two main components:
   
 In production environment, each of these components (backend and frontend) can be deployed on different hosts and OS.
 
-In this guide we will deployed Apla Blockchain Platform based on three nodes on the test ICT-infrastructure and build Molis client. As Apla node OS we will used Debian 9 hosts with GUI or Windows Server 2012R2/2016 hosts.
+In this guide we will deployed Apla Blockchain Platform based on three nodes on the test ICT-infrastructure and build Molis client. As Apla node OS we will used:
+ - Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI 
+ - Windows Server 2012R2/2016
 
-All of these hosts are connected to each other in simple network and have IP-addresses: 10.10.99.1-10.10.99.3
+For test purposes, all of these hosts are connected to each other in simple network and have IP-addresses: 10.10.99.1-10.10.99.3
 
 ## Backend Install <a name="backend-install"></a>
 
+In  this section we will deploy Apla Backend components. All of these components are deployed on one node.
+
 ### Backend Software Prerequisites <a name="backend-software-prerequisites"></a>
 
+
+
 #### Debian Host 
+
+##### Install sudo
+
+
+
+##### Install common software
 
 #### Windows Server Host
 
