@@ -3,12 +3,21 @@
 
    * [Overview](#overview)
    * [Backend Install](#backend-install)
-      * [Backend Software Prerequisites](#backend-software-prerequisites)
-      * [First Node Deployment](#first-node-deployment)
-      * [Other Nodes Deployment](#other-nodes-deployment)
+      * [Backend Install for Debian](#backend-install-deb)
+        * [Backend Software Prerequisites](#backend-software-prerequisites-deb)
+        * [First Node Deployment](#first-node-deployment-deb)
+        * [Other Nodes Deployment](#other-nodes-deployment-deb)
+      * [Backend Install for Windows](#backend-install-win)
+        * [Backend Software Prerequisites](#backend-software-prerequisites-win)
+        * [First Node Deployment](#first-node-deployment-win)
+        * [Other Nodes Deployment](#other-nodes-deployment-win)
    * [Frontend Install](#frontend-install)
-      * [Frontend Software Prerequisites](#frontend-software-prerequisites)
-      * [Build Molis App](#build-molis-app)
+      * [Frontend Install for Debian](#backend-install-debian)
+        * [Frontend Software Prerequisites](#frontend-software-prerequisites-deb)
+        * [Build Molis App](#build-molis-app-deb)
+      * [Frontend Install for Windows](#backend-install-win)
+        * [Frontend Software Prerequisites](#frontend-software-prerequisites-win)
+        * [Build Molis App](#build-molis-app-win)
    * [Launching](#launching)
 
 ## Overview <a name="overview"></a>
@@ -35,48 +44,69 @@ In this guide we will deployed Apla Blockchain Platform based on three nodes on 
 
 For test purposes, all of these hosts are connected to each other in simple network and have IP-addresses: 10.10.99.1-10.10.99.3
 
+
+
 ## Backend Install <a name="backend-install"></a>
 
 In  this section we will deploy Apla Backend components. All of these components are deployed on one node.
 
-### Backend Software Prerequisites <a name="backend-software-prerequisites"></a>
+### ***Backend Install for Debian OS*** <a name="backend-install-deb"></a>
 
+### Backend Software Prerequisites <a name="backend-software-prerequisites-deb"></a>
 
+Before install Apla Backend components, you need install several additional software.
 
-#### Debian Host 
+#### Install sudo
 
-##### Install sudo
+All commands for Debian 9 should be run as non root user. But some system commands need superuser privileges to be executed. By default, sudo is not installed on Debian 9, and first, you should install it.
 
+1) Become root superuser:
+```
+$ su - 
+```
+2) Upgrade your system:
+```
+# apt update -y && apt upgrade -y && apt dist-upgrade -y
+```
+3) Install sudo:
+```
+# apt install sudo -y
+```
+4) Add your user to sudo group:
+```
+# usermod -aG sudo user
+```
+5) After the reboot, the changes take effect.
 
+#### Install common software
 
-##### Install common software
+Some of used packages can be downloaded from the official Debian repository. Install packages:
+```
+$ sudo apt install -y postgresql git curl apt-transport-https build-essential
+```
 
-#### Windows Server Host
+#####	Create Apla directory
 
-### First Node Deployment <a name="first-node-deployment"></a>
+All software used by Apla Blockchain Platform is recommended to store in a special directory. In this guide, we will use /opt/apla directory as main, but you can change it to your own.
 
-#### Debian Host
+##### Install Go Language
 
-#### Windows Server Host
+### First Node Deployment <a name="first-node-deployment-deb"></a>
 
-### Other Nodes Deployment <a name="other-nodes-deployment"></a>
+### Other Nodes Deployment <a name="other-nodes-deployment-deb"></a>
 
-#### Debian Host
+### ***Backend Install for Windows Server OS*** <a name="backend-install-win"></a>
 
-#### Windows Server Host
+### Backend Software Prerequisites <a name="backend-software-prerequisites-win"></a>
+
+### First Node Deployment <a name="first-node-deployment-win"></a>
+
+### Other Nodes Deployment <a name="other-nodes-deployment-win"></a>
 
 ## Frontend Install <a name="frontend-install"></a>
 
 ### Frontend Software Prerequisites <a name="frontend-software-prerequisites"></a>
 
-#### Debian Host
-
-#### Windows Server Host
-
 ### Build Molis App <a name="build-molis-app"></a>
-
-#### Debian Host
-
-#### Windows Server Host
 
 ## Launching <a name="launching"></a>
