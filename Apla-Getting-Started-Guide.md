@@ -12,7 +12,7 @@
         * [First Node Deployment](#first-node-deployment-win)
         * [Other Nodes Deployment](#other-nodes-deployment-win)
    * [Frontend Install](#frontend-install)
-      * [Frontend Install for Debian](#backend-install-debian)
+      * [Frontend Install for Debian](#backend-install-deb)
         * [Frontend Software Prerequisites](#frontend-software-prerequisites-deb)
         * [Build Molis App](#build-molis-app-deb)
       * [Frontend Install for Windows](#backend-install-win)
@@ -335,9 +335,88 @@ Now, all nodes are connected to each other.
 
 ### Backend Software Prerequisites <a name="backend-software-prerequisites-win"></a>
 
+Before install Apla Backend components, you need install several additional software. To do this, you should have administrators privileges.
+
+#### Install Go Language
+
+1) Download Go latest stable version 1.10 for Windows from the [official site](https://golang.org/dl/).
+
+2) Install Go without any specific settings.
+
+#### Install PostgreSQL
+
+1) Download PostgreSQL 10.4 installer for Windows x86-64 from the [official site](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
+
+2) During installation process, you should:
+
+- specify default installation directory
+- specify all selected components
+- specify default data directory
+- set a password for the database superuser (postgres), for example ‘apla’
+- specify default port 5432 the server should listen on (you can set your own port, but also you must change it in node configuration file ‘config.toml’)
+- select default locale to be used by the new database cluster
+- after setup wizard completed, don’t launch stack builder
+
+3) Run pgAdmin4 app and create node current state database, for example ‘apladb’
+
+#### Install Git
+
+1) Download the latest 64-bit Git for Windows from the [official site](https://git-scm.com/download/win).
+
+2) Install Git without any specific settings.
+
+#### Install MinGW
+
+You should install MinGW software only if you want build Apla backend from source code.
+
+1) Download the latest MinGW-W64 from its [site](https://sourceforge.net/projects/mingw-w64/).
+
+2) During installation process, you should specify setup settings:
+
+- Version: from drop list select latest version
+- Architecture: from drop list select ‘x86_64’
+- Threads: from drop list select ‘win32’
+
+Leave the other settings by default.
+
+3) Add absolute path of directory ‘mingw64/bin’ to the system environment variable PATH by command line, for example “C:\mingw64\bin”:
+```
+> setx PATH “C:\mingw64\bin”
+```
+
+4) For Windows Server 2016 you must restart your system.
+
+#### Install Python 3
+
+1) Python 3 should be installed only on the first node because of executing special scripts.
+
+2) Download latest Python 3 Release from the [official site](https://www.python.org/downloads/).
+
+3) During installation process, select “Add python.exe to Path” in features tree. Leave the other settings by default.
+
+4) For script execution install additional package:
+```
+> py -m pip install requests
+```
+
+Install genesis_blockchain_tools:
+```
+> py -m pip install git+https://github.com/blitzstern5/genesis-blockchain-tools
+```
+
+#### OS Firewall Requirements
+
+In Windows Server firewall settings, you should allow next incoming connections:
+
+-	7078/TCP - Node's TCP-server
+-	7079/TCP - Node's API-server
+-	8000/TCP - Centrifugo server
+
 ### First Node Deployment <a name="first-node-deployment-win"></a>
 
 ### Other Nodes Deployment <a name="other-nodes-deployment-win"></a>
+
+
 
 ## Frontend Install <a name="frontend-install"></a>
 
