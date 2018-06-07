@@ -42,7 +42,7 @@ In this guide we will deployed Apla Blockchain Platform based on three nodes on 
  - Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI 
  - Windows Server 2012R2/2016
 
-For test purposes, all of these hosts are connected to each other in simple network and have IP-addresses: 10.10.99.1-10.10.99.3
+For testing purposes, all of these hosts are connected to each other in simple network and have IP-addresses: 10.10.99.1-10.10.99.3
 
 
 
@@ -74,8 +74,19 @@ In production environment, you must have at least several dedicated centrifugo h
 
 For testing purposes, in this guide, we will deploy Centrifugo service on each Apla node.
 
-3) Go-Apla (kernel of the Apla's node, contains TCP-server and API-server)
+3) Go-Apla 
 
+Go-Apla is kernel of the Apla's node. It consists of two services TCP-server and API-server.
+
+TCP-server is responsible for Apla nodes interconnection.
+
+API-server is responsible for connections with Molis clients.
+
+In testing environment, you can deploy Go-Apla service with other backend components on one host
+
+In production environment, you must deploy Go-Apla services on dedicated hosts.
+
+For testing purposes, in this guide, we will deploy Go-Apla services on the same host with other backend components.
 
 
 ## Backend Install for Debian OS <a name="backend-install-deb"></a>
