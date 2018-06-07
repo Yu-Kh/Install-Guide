@@ -39,7 +39,9 @@ Apla Blockchain Platform consists of two main components:
 In production environment, each of these components (backend and frontend) can be deployed on different hosts and OS.
 
 In this guide we will deployed Apla Blockchain Platform based on three nodes on the test ICT-infrastructure and build Molis client. As Apla node OS we will used:
- - Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI 
+ - Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable)
+   - with installed GNOME GUI in a case of building Molis client on your Debian host
+   - minimal server core installation in a case of deployment only backend components
  - Windows Server 2012R2/2016
 
 For testing purposes, all of these hosts are connected to each other in simple network. In the bottom table, there are network settings for each nodes components that we will deploy through this guide:
@@ -253,6 +255,11 @@ $ ./go-apla generateFirstBlock --config=node1/config.toml
 ```
 $ ./go-apla initDatabase --config=node1/config.toml
 ```
+
+#### Create services for backend components
+
+This section under development
+
 #### Start First Node
 
 For starting first node you should start two services:
@@ -519,6 +526,9 @@ Usage and flags of ‘go-apla.exe’ file are described in [documentation](http:
 ```
 > go-apla.exe initDatabase --config=node\config.toml
 ```
+#### Create services for backend components
+
+This section under development
 
 #### Start First Node
 
@@ -671,6 +681,8 @@ Molis client can be build via three technical implementations:
 -	Mobile Application
 
 ## Frontend Install for Debian <a name="frontend-install-deb"></a>
+
+Molis client can be build only on Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with **installed GNOME GUI**.
 
 ### Frontend Software Prerequisites <a name="frontend-software-prerequisites-deb"></a>
 
