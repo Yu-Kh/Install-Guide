@@ -136,7 +136,7 @@ $ su -
 
 Some of used packages can be downloaded from the official Debian repository. Install packages:
 ```
-$ sudo apt install -y postgresql git curl apt-transport-https build-essential
+$ sudo apt install -y git curl apt-transport-https build-essential
 ```
 
 #### Create Apla directory
