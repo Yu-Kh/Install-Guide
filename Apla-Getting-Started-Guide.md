@@ -250,7 +250,7 @@ Where:
 
 - --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-deb)
 - --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-deb)
-- --centUrl=http://10.10.99.1:8000 - used IP address and port of Centrifugo of Node 1
+- --centUrl=ht&#8203;tp://10.10.99.1:8000 - used IP address and port of Centrifugo of Node 1
 - --httpHost=10.10.99.1 - used IP address and port of API-server of Node 1
 - --tcpHost=10.10.99.1 - used IP address and port of TCP-server of Node 1
 - Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
@@ -326,7 +326,7 @@ Where:
 
 - --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-deb)
 - --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-deb)
-- --centUrl=http://10.10.99.2:8000 - used IP address and port of Centrifugo of Node 2
+- --centUrl=ht&#8203;tp://10.10.99.2:8000 - used IP address and port of Centrifugo of Node 2
 - --httpHost=10.10.99.2 - used IP address and port of API-server of Node 2
 - --tcpHost=10.10.99.2 - used IP address and port of TCP-server of Node 2
 - --nodesAddr=10.10.99.1 - IP-address of Node 1
@@ -553,7 +553,7 @@ Where:
 
 - --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-win)
 - --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-win)
-- --centUrl=http://10.10.99.1:8000 - used IP address and port of Centrifugo of Node 1
+- --centUrl=ht&#8203;tp://10.10.99.1:8000 - used IP address and port of Centrifugo of Node 1
 - --httpHost=10.10.99.1 - used IP address and port of API-server of Node 1
 - --tcpHost=10.10.99.1 - used IP address and port of TCP-server of Node 1
 - Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
@@ -627,7 +627,7 @@ Where:
 
 - --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-win)
 - --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-win)
-- --centUrl=http://10.10.99.2:8000 - used IP address and port of Centrifugo of Node 2
+- --centUrl=ht&#8203;tp://10.10.99.2:8000 - used IP address and port of Centrifugo of Node 2
 - --httpHost=10.10.99.2 - used IP address and port of API-server of Node 2
 - --tcpHost=10.10.99.2 - used IP address and port of TCP-server of Node 2
 - --nodesAddr=10.10.99.1 - IP-address of Node 1
