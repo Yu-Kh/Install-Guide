@@ -65,7 +65,7 @@ In  this section we will deploy Apla Backend components.
 
 Apla Blockchain Platform’s backend consists of three main components:
 
-1) PostgreSQL database sytem
+1) PostgreSQL database system
 
 Each Apla node use PostgreSQL database system for store its current state database. 
 
@@ -174,12 +174,12 @@ These packages should be installed only on the first node because of executing s
 
 1) Install Python3-pip:
 ```
-$ sudo apt install python3-pip
+$ sudo apt install -y python3-pip
 ```
 
-2) Install genesis_blockchain_tools:
+2) Download and install required python packages:
 ```
-$ sudo pip3 install git+https://github.com/blitzstern5/genesis-blockchain-tools
+$ sudo wget https://raw.githubusercontent.com/GenesisKernel/genesis-tests/master/requirements.txt && sudo pip3 install -r requirements.txt
 ```
 
 #### OS Firewall Requirements
@@ -440,14 +440,11 @@ Leave the other settings by default.
 
 3) During installation process, select “Add python.exe to Path” in features tree. Leave the other settings by default.
 
-4) For script execution install additional package:
-```
-> py -m pip install requests
-```
+4) Download python packages list "requirements.txt" from [GitHub](https://raw.githubusercontent.com/GenesisKernel/genesis-tests/master/requirements.txt).
 
-Install genesis_blockchain_tools:
+5) For script execution install additional packages via "requirements.txt":
 ```
-> py -m pip install git+https://github.com/blitzstern5/genesis-blockchain-tools
+> py -m pip install -r requirements.txt
 ```
 
 #### OS Firewall Requirements
