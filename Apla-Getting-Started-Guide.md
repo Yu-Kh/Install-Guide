@@ -67,7 +67,7 @@ In  this section we will deploy Apla Backend components.
 
 Apla Blockchain Platform’s backend consists of three main components:
 
-1) PostgreSQL database system
+1) **PostgreSQL database system**
 
 Each Apla node use PostgreSQL database system for store its current state database. 
 
@@ -77,7 +77,7 @@ In production environment, it is not recommended to have one PostgreSQL database
 
 For testing purposes, in this guide, we will deploy PostgreSQL on each Apla node.
 
-2) Centrifugo notification server
+2) **Centrifugo notification server**
 
 Centrifugo is notification service which receive notifications from Go-Apla TCP-server and send them to frontend (Molis client). So users can see status of their transactions.
 
@@ -89,7 +89,7 @@ In production environment, you must have at least several dedicated centrifugo h
 
 For testing purposes, in this guide, we will deploy Centrifugo service on each Apla node.
 
-3) Go-Apla 
+3) **Go-Apla**
 
 Go-Apla is kernel of the Apla's node. It consists of two services TCP-server and API-server.
 
