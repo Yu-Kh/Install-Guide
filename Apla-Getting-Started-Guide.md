@@ -48,7 +48,35 @@ For test purposes, all of these hosts are connected to each other in simple netw
 
 ## ***Backend Install*** <a name="backend-install"></a>
 
-In  this section we will deploy Apla Backend components. All of these components are deployed on one node.
+In  this section we will deploy Apla Backend components.
+
+Apla Blockchain Platform’s backend consists of three main components:
+
+1) PostgreSQL database sytem
+
+Each Apla node use PostgreSQL database system for store its current state database. 
+
+In testing environment, you can deploy just one instance of PostgreSQL database system for all nodes. In this case, you should create PostgreSQL databases for each node on. All nodes will connected to their databases, located on one PostgreSQL instance.
+
+In production environment, it is not recommended to have one PostgreSQL database system for all nodes. Each Apla node must have its own instance of PostgreSQL and should connected only to it. There is not necessary to deploy this instance on the same host with other backend components.
+
+For testing purposes, in this guide, we will deploy PostgreSQL on each Apla node.
+
+2) Centrifugo notification server
+
+Centrifugo is notification service which receive notifications from Go-Apla TCP-server and send them to frontend (Molis client). So users can see status of their transactions.
+
+Centrifugo is unified notification service for all nodes in Apla Blockchain Platform. When Molis client connected to Go-Apla API-service, it received IP-address of Centrifugo host and connected to it via websocket.
+
+In testing environment, you can deploy centrifugo service on the same host as other backend components. It can be one centrifugo service for all nodes or each node may be connected to its own centrifugo instance.
+
+In production environment, you must have at least several dedicated centrifugo hosts.
+
+For testing purposes, in this guide, we will deploy Centrifugo service on each Apla node.
+
+3) Go-Apla (kernel of the Apla's node, contains TCP-server and API-server)
+
+
 
 ## Backend Install for Debian OS <a name="backend-install-deb"></a>
 
