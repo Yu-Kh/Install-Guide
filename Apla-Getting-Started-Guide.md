@@ -194,7 +194,7 @@ By default, after installing Debian 9, there are no firewall rules. But, if you 
 
 ### First Node Deployment <a name="first-node-deployment-deb"></a>
 
-#### Install PostgreSQL
+#### Install PostgreSQL <a name="install-postgres-deb"></a>
 
 1) Install PostgreSQL:
 ```
@@ -211,7 +211,7 @@ $ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'apla'"
 $ sudo -u postgres psql -c "CREATE DATABASE apladb"
 ```
 
-#### Install Centrifugo
+#### Install Centrifugo <a name="install-centrifugo-deb"></a>
 
 1) Download Centrifugo version 1.7.9 from [GitHub](https://github.com/centrifugal/centrifugo/releases/) or via command line:
 ```
@@ -237,12 +237,21 @@ $ mkdir go-apla && cd go-apla && mkdir node1
 ```
 $ go get -v github.com/AplaProject /go-apla && cd /opt/apla && mv bin/go-apla go-apla/ && rm -rf bin/ && rm -rf src/
 ```
-Usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
 
-3) Create Node 1 configuration file:
+
+3) Create Node 1 configuration file, all used network settings are described in [Overview](#overview):
 ```
 $ ./go-apla config --dataDir=/opt/apla/go-apla/node1 --dbName=apladb --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.1:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
 ```
+Where:
+
+- --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-deb)
+- --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-deb)
+- --centUrl - used IP address and port of Centrifugo
+- --httpHost - used IP address and port of API-server
+- --tcpHost - used IP address and port of TCP-server
+- Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
+
 4) Generate Node 1 keys:
 ```
 $ ./go-apla generateKeys --config=node1/config.toml
@@ -682,7 +691,7 @@ Molis client can be build via three technical implementations:
 
 ## Frontend Install for Debian <a name="frontend-install-deb"></a>
 
-Molis client can be build only on Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with **installed GNOME GUI**.
+Molis client can be build by yarn package manager only on Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with **installed GNOME GUI**.
 
 ### Frontend Software Prerequisites <a name="frontend-software-prerequisites-deb"></a>
 
