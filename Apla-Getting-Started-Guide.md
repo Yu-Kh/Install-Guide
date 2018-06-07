@@ -42,9 +42,22 @@ In this guide we will deployed Apla Blockchain Platform based on three nodes on 
  - Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable) with installed GNOME GUI 
  - Windows Server 2012R2/2016
 
-For testing purposes, all of these hosts are connected to each other in simple network and have IP-addresses: 10.10.99.1-10.10.99.3
+For testing purposes, all of these hosts are connected to each other in simple network. In the bottom table, there are network settings for each nodes components that we will deploy through this guide:
 
-
+|Node Number| Component | IP and Port |
+|:---------:|-----------|-------------|
+| 1 | PostgreSQL | 127.0.0.1:5432|
+| 1 | Centrifugo | 10.10.99.1:8000|
+| 1 | Go-Apla (TCP-server) | 10.10.99.1:7078|
+| 1 | Go-Apla (API-server) | 10.10.99.1:7079|
+| 2 | PostgreSQL | 127.0.0.1:5432|
+| 2 | Centrifugo | 10.10.99.2:8000|
+| 2 | Go-Apla (TCP-server) | 10.10.99.2:7078|
+| 2 | Go-Apla (API-server) | 10.10.99.2:7079|
+| 3 | PostgreSQL | 127.0.0.1:5432|
+| 3 | Centrifugo | 10.10.99.3:8000|
+| 3 | Go-Apla (TCP-server) | 10.10.99.3:7078|
+| 3 | Go-Apla (API-server) | 10.10.99.3:7079|
 
 ## ***Backend Install*** <a name="backend-install"></a>
 
