@@ -446,8 +446,6 @@ Before install Apla Backend components, you need install several additional soft
 
 2) Install Go without any specific settings.
 
-
-
 #### Install Git
 
 1) Download the latest 64-bit Git for Windows from the [official site](https://git-scm.com/download/win).
