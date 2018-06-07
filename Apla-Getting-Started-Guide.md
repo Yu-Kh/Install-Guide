@@ -168,16 +168,7 @@ $ export GOROOT=/usr/local/go && export GOPATH=/opt/apla/ && export PATH=$GOPATH
 ```
 $ rm go1.10.1.linux-amd64.tar.gz
 ```
-#### Setup PostgreSQL
 
-1) Change user's password postgres to Apla's default (you can set your own password, but also you must change it in node configuration file ‘config.toml’):
-```
-$ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'apla'"
-```
-2) Create node current state database, for example ‘apladb’:
-```
-$ sudo -u postgres psql -c "CREATE DATABASE apladb"
-```
 #### Install Python packages
 These packages should be installed only on the first node because of executing special scripts.
 
@@ -200,6 +191,23 @@ By default, after installing Debian 9, there are no firewall rules. But, if you 
 -	8000/TCP - Centrifugo server
 
 ### First Node Deployment <a name="first-node-deployment-deb"></a>
+
+#### Install PostgreSQL
+
+1) Install PostgreSQL:
+```
+$ sudo apt install -y postgresql
+```
+
+2) Change user's password postgres to Apla's default (you can set your own password, but also you must change it in node configuration file ‘config.toml’):
+```
+$ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'apla'"
+```
+
+3) Create node current state database, for example ‘apladb’:
+```
+$ sudo -u postgres psql -c "CREATE DATABASE apladb"
+```
 
 #### Install Centrifugo
 
@@ -395,21 +403,7 @@ Before install Apla Backend components, you need install several additional soft
 
 2) Install Go without any specific settings.
 
-#### Install PostgreSQL
 
-1) Download PostgreSQL 10.4 installer for Windows x86-64 from the [official site](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
-
-2) During installation process, you should:
-
-- specify default installation directory
-- specify all selected components
-- specify default data directory
-- set a password for the database superuser (postgres), for example ‘apla’
-- specify default port 5432 the server should listen on (you can set your own port, but also you must change it in node configuration file ‘config.toml’)
-- select default locale to be used by the new database cluster
-- after setup wizard completed, don’t launch stack builder
-
-3) Run pgAdmin4 app and create node current state database, for example ‘apladb’
 
 #### Install Git
 
@@ -465,6 +459,22 @@ In Windows Server firewall settings, you should allow next incoming connections:
 -	8000/TCP - Centrifugo server
 
 ### First Node Deployment <a name="first-node-deployment-win"></a>
+
+#### Install PostgreSQL
+
+1) Download PostgreSQL 10.4 installer for Windows x86-64 from the [official site](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
+
+2) During installation process, you should:
+
+- specify default installation directory
+- specify all selected components
+- specify default data directory
+- set a password for the database superuser (postgres), for example ‘apla’
+- specify default port 5432 the server should listen on (you can set your own port, but also you must change it in node configuration file ‘config.toml’)
+- select default locale to be used by the new database cluster
+- after setup wizard completed, don’t launch stack builder
+
+3) Run pgAdmin4 app and create node current state database, for example ‘apladb’
 
 #### Install Centrifugo
 
