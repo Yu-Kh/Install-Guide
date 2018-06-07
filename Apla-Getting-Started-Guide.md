@@ -38,7 +38,7 @@ Apla Blockchain Platform consists of two main components:
   
 In production environment, each of these components (backend and frontend) can be deployed on different hosts and OS.
 
-In this guide we will deployed Apla Blockchain Platform based on three nodes on the test ICT-infrastructure and build Molis client. As Apla node OS we will used:
+In this guide we will deployed Apla Blockchain Platform based on three nodes with the same OS on the test ICT-infrastructure and build Molis client. As Apla node OS we will used:
  - Debian 9 (Stretch) 64-bit [official distributive](https://www.debian.org/CD/http-ftp/#stable)
    - with installed GNOME GUI in a case of building Molis client on your Debian host
    - minimal server core installation in a case of deployment only backend components
@@ -239,7 +239,7 @@ $ go get -v github.com/AplaProject /go-apla && cd /opt/apla && mv bin/go-apla go
 ```
 
 
-3) Create Node 1 configuration file, all used network settings are described in [Overview](#overview):
+3) Create Node 1 configuration file, all used network settings (IP-adresses and ports) are described in [Overview](#overview):
 ```
 $ ./go-apla config --dataDir=/opt/apla/go-apla/node1 --dbName=apladb --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.1:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
 ```
@@ -247,9 +247,9 @@ Where:
 
 - --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-deb)
 - --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-deb)
-- --centUrl - used IP address and port of Centrifugo
-- --httpHost - used IP address and port of API-server
-- --tcpHost - used IP address and port of TCP-server
+- --centUrl=http://10.10.99.1:8000 - used IP address and port of Centrifugo of Node 1
+- --httpHost=10.10.99.1 - used IP address and port of API-server of Node 1
+- --tcpHost=10.10.99.1 - used IP address and port of TCP-server of Node 1
 - Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
 
 4) Generate Node 1 keys:
@@ -280,8 +280,13 @@ If you did not create these services, you can just execute binary files from its
 
 1) Execute centrifugo file:
 ```
-$ cd /opt/apla/centrifugo && ./centrifugo -a Node_IP-address --config=config.json
+$ cd /opt/apla/centrifugo && ./centrifugo -a 10.10.99.1 --config=config.json
 ```
+Where:
+
+ - 10.10.99.1 - IP-address of Node 1
+ - --config=config.json - path to centrifugo configuration file 'config.json'
+ 
 2) Execute go-apla file in another console:
 ```
 $ cd /opt/apla/go-apla/ && ./go-apla start --config=node1/config.toml
@@ -293,17 +298,36 @@ Now, you can connecting to your node via Molis App.
 
 Deployment of the second node and others is similar to the first node, but has some differences in creation of go-apla ‘config.toml’ file.
 
-#### Configuration
+For each other node deployment you should repeat next steps:
 
-1) Copy file of the first block to Node 2. For example, you can do it via scp:
+- Install Backend Software Prerequisites
+- Install PostgreSQL
+- Install Centrifugo 
+- Install Go-Apla
+
+#### Other Nodes Configuration
+
+In this example we will configure Node 2. Other Nodes can be configured in the same way. All used network settings (IP-adresses and ports) are described in [Overview](#overview).
+
+1) Copy file of the first block to Node 2. For example, you can do it via scp on Node 2:
 ```
-$ scp user@10.10.99.1:/opt/apla/go-apla/node1/firstblock /opt/apla/go-apla/node2/
+$ scp user@10.10.99.1:/opt/apla/go-apla/node1/first /opt/apla/go-apla/node2/
 ```
 
 2) Create Node 2 configuration file:
 ```
 $ ./go-apla config --dataDir=/opt/apla/go-apla/node2 --dbName=apladb  --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.2:8000 --httpHost=10.10.99.2 --tcpHost=10.10.99.2 --nodesAddr=10.10.99.1
 ```
+
+Where:
+
+- --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-deb)
+- --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-deb)
+- --centUrl=http://10.10.99.2:8000 - used IP address and port of Centrifugo of Node 2
+- --httpHost=10.10.99.2 - used IP address and port of API-server of Node 2
+- --tcpHost=10.10.99.2 - used IP address and port of TCP-server of Node 2
+- --nodesAddr=10.10.99.1 - IP-address of Node 1
+- Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
 
 3) Generate Node 2 keys:
 ```
@@ -338,10 +362,11 @@ Where:
 -	PublicKey2 - content of file PublicKey of the second node
 -	balance - set wallet balance of the second node
 
-**Example**:
+**Example**: 
 ```
 $ python3 updatekeys.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c502a23f2 10.10.99.1 7079 -5910245696104921893 1812246837170b6df8609fd9d846a0984f4e5b3ee9037717e39dc38c82ea1a8e528c9e6f6acdc06b2a33f228c4d2649005bde47af857f3f756aaf64d3f1648dd 1000000000000000000000
 ```
+All used network settings (IP-adresses and ports) are described in [Overview](#overview).
 
 This script will create contract, which add the second node public key to the table 'keys' of database.
 
@@ -405,6 +430,8 @@ Where:
 ```
 $ python3 newValToFullNodes.py bda1c45d3298cb7bece1f76a81d8016d33cdec18c925297c7748621c502a23f2 10.10.99.1 7079 '[{"tcp_address":"10.10.99.1:7078","api_address":"http://10.10.99.1:7079","key_id":"5541394763743537703","public_key":"d26824d0e94894bae9e983e7a386a1c9e4f609990d4b635b6926b52c831d6ec28b95f75acf0c9d10ee96afc0dd02617f08fea225706f0e502d5fe26587023e3b"},{"tcp_address":"10.10.99.2:7078","api_address":"http://10.10.99.2:7079","key_id":"6404048169476933259","public_key":"afd9ed260ec65a2a294794285ad40c5edc219e3be2455a044e2444111b8525815b224fdb369aa17307434d0e6aca8f9c959f823756baeb9ccb105f96f996bf11" }, {"tcp_address":"10.10.99.3:7078","api_address":"http://10.10.99.3:7079","key_id":"-5910245696104921893","public_key":"254c38cd6d9f47ffc42a8d178bb47f9a0cbc46ec6ef4d972c05146bfe87a8da03cb3450b71b2a724fdb2184163ae91023931c9fe5f148f0bdceeeefc5a16fe58"}]'
 ```
+All used network settings (IP-adresses and ports) are described in [Overview](#overview).
+
 Now, all nodes are connected to each other.
 
 ### ***Backend Install for Windows Server OS*** <a name="backend-install-win"></a>
