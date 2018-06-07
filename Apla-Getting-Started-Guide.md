@@ -223,10 +223,13 @@ $ wget https://github.com/centrifugal/centrifugo/releases/download/v1.7.9/centri
 $ rm -R centrifugo-1.7.9-linux-amd64 && rm centrifugo-1.7.9-linux-amd64.zip
 ```
 
-3) Create Centrifugo configuration file (you can set your own "secret", but also you must change it in node configuration file ‘config.toml’):
+3) Create Centrifugo configuration file:
 ```
 $ echo '{"secret":"CENT_SECRET"}' > centrifugo/config.json
 ```
+
+You can set your own "secret", but also you must change it in node configuration file ‘config.toml’.
+
 #### Install Go-Apla
 
 1) Create go-apla and node1 directories:
@@ -498,7 +501,7 @@ In Windows Server firewall settings, you should allow next incoming connections:
 
 ### First Node Deployment <a name="first-node-deployment-win"></a>
 
-#### Install PostgreSQL
+#### Install PostgreSQL <a name="install-postgres-win"></a>
 
 1) Download PostgreSQL 10.4 installer for Windows x86-64 from the [official site](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
 
@@ -514,7 +517,7 @@ In Windows Server firewall settings, you should allow next incoming connections:
 
 3) Run pgAdmin4 app and create node current state database, for example ‘apladb’
 
-#### Install Centrifugo
+#### Install Centrifugo <a name="install-centrifugo-win"></a>
 
 1) Download Centrifugo-1.7.9-windows-amd64.zip from [GitHub](https://github.com/centrifugal/centrifugo/releases/).
 
@@ -542,10 +545,19 @@ After that, ‘go-apla.exe’ file will appear in ‘go-apla’ directory.
 
 Usage and flags of ‘go-apla.exe’ file are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/).
 
-3) Create Node 1 ‘config.toml’ configuration file:
+3) Create Node 1 ‘config.toml’ configuration file, all used network settings (IP-adresses and ports) are described in [Overview](#overview):
 ```
 > go-apla.exe config --dataDir=C:\Apla\go-apla\node --dbName=apladb --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.1:8000 --httpHost=10.10.99.1 --tcpHost=10.10.99.1
 ```
+Where:
+
+- --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-win)
+- --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-win)
+- --centUrl=http://10.10.99.1:8000 - used IP address and port of Centrifugo of Node 1
+- --httpHost=10.10.99.1 - used IP address and port of API-server of Node 1
+- --tcpHost=10.10.99.1 - used IP address and port of TCP-server of Node 1
+- Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
+
 4) Generate Node 1 keys:
 ```
 > go-apla.exe generateKeys --config=node\config.toml
@@ -577,6 +589,10 @@ If you did not create these services, you can just execute .exe files from its d
 ```
 > centrifugo.exe -a 10.10.99.1 --config=config.json
 ```
+Where:
+
+ - 10.10.99.1 - IP-address of Node 1
+ - --config=config.json - path to centrifugo configuration file 'config.json'
 
 2) Run go-apla.exe:
 ```
@@ -589,7 +605,16 @@ Now, you can connecting to your node via Molis App.
 
 Deployment of the second node and others is similar to the first node, but has some differences in creation of go-apla ‘config.toml’ file.
 
-#### Configuration
+For each other node deployment you should repeat next steps:
+
+- Install Backend Software Prerequisites
+- Install PostgreSQL
+- Install Centrifugo 
+- Install Go-Apla
+
+#### Other Nodes Configuration
+
+In this example we will configure Node 2. Other Nodes can be configured in the same way. All used network settings (IP-adresses and ports) are described in [Overview](#overview).
 
 1) Copy file of the first block to Node 2 in the same directory. Default location of the first block file you can see in ‘config.toml’ file.
 
@@ -597,6 +622,16 @@ Deployment of the second node and others is similar to the first node, but has s
 ```
 > go-apla.exe config --dataDir=C:\Apla\go-apla\node --dbName=apladb --privateBlockchain=true --centSecret="CENT_SECRET" --centUrl=http://10.10.99.2:8000 --httpHost=10.10.99.2 --tcpHost=10.10.99.2 --nodesAddr=10.10.99.1
 ```
+
+Where:
+
+- --dbName - database name 'apladb' that was created in section [Install PostgreSQL](#install-postgres-win)
+- --centSecret - Centrifugo secret 'CENT_SECRET' that was created in section [Install Centrifugo](#install-centrifugo-win)
+- --centUrl=http://10.10.99.2:8000 - used IP address and port of Centrifugo of Node 2
+- --httpHost=10.10.99.2 - used IP address and port of API-server of Node 2
+- --tcpHost=10.10.99.2 - used IP address and port of TCP-server of Node 2
+- --nodesAddr=10.10.99.1 - IP-address of Node 1
+- Other usage and flags of go-apla are described in [documentation](http://genesiskernel.readthedocs.io/en/latest/)
 
 3) Generate Node 2 keys:
 ```
@@ -637,12 +672,15 @@ Where:
 ```
 >py updateKeys.py 0f1aaf0c76716f189a295a0edbeed05ae760c4cd0009bd337f19aea6a0d37d89 10.10.99.1 7079 839301472950762263 2ce37e8a3fbeadd3862e962267fa29c43c02b6d2fbab9360f7d2e988e1477c333aa06fd6d85a8999779f1314063bf2bd2a298ea1284d0284b1c1ea69870d3ba 1000000000000000000000
 ```
+All used network settings (IP-adresses and ports) are described in [Overview](#overview).
 
 This script will create contract, which add the second node public key to the table 'keys' of database.
 
 #### Create connection between nodes
 
-Then you need to create a connection between the nodes. For this, you should download this script [newValToFullNodes.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/newValToFullNodes.py). All information that you are need to script execution are located in node's directory. This script must be executed on the first node with founder's privileges. Execute script with next arguments:
+Then you need to create a connection between the nodes. For this, you should download this script [newValToFullNodes.py](https://github.com/GenesisKernel/genesis-tests/blob/master/scripts/newValToFullNodes.py). All information that you are need to script execution are located in node's directory. This script must be executed on the first node with founder's privileges. 
+
+Execute script with next arguments:
 ```
 > py newValToFullNodes.py PrivateKey1 Host1 Port1 “NewValue”
 ```
@@ -699,6 +737,7 @@ Where:
 ```
 >py updateFullNode.py 0f1aaf0c76716f189a295a0edbeed05ae760c4cd0009bd337f19aea6a0d37d89 10.10.99.1 7079 "[{\"tcp_address\":\"10.10.99.1:7078\",\"api_address\":\"http://10.10.99.1:7079\",\"key_id\":\"4053339477525839986\",\"public_key\":\"d708bda3734e17822245d6477810ff28c150380abb9ae0271c5a49eca05be92fa7d80d0043e476ef936971288dd5df08b83370488182f524d789b919b398e70b\"},{\"tcp_address\":\"10.10.99.2:7078\",\"api_address\":\"http://10.10.99.2:7079\",\"key_id\":\"1647233376862283221\",\"public_key\":\"ed1bd2a29f607ca5529b353e8d6a9d998ebaca30a129a775b738b1bb0da4ff8afde9c6abdf208fd41fa4541cec471417705c7786ab69c359d36d822e8840815a\"},{\"tcp_address\":\"10.10.99.3:7078\",\"api_address\":\"http://10.10.99.3:7079\",\"key_id\":\"5700268145718545990\",\"public_key\":\"f653dd110e19abc259865397f14b1d866215fc4ea9abcaa246e620e750a3e26a46c5565bd6f2d19b4f18af10ccd8088bc62b7b2687b869bd542e91f2203ec164\"}]"
 ```
+All used network settings (IP-adresses and ports) are described in [Overview](#overview).
 
 Now, all nodes are connected to each other.
 
@@ -778,6 +817,7 @@ http://Node_IP-address:Node_HTTP-Port
     ]
 }
 ```
+All used network settings (IP-adresses and ports) are described in [Overview](#overview).
 
 3) Build desktop app by Yarn:
 ```
@@ -855,6 +895,7 @@ http://Node_IP-address:Node_HTTP-Port
     ]
 }
 ```
+All used network settings (IP-adresses and ports) are described in [Overview](#overview).
 
 3) Build desktop app by Yarn:
 ```
