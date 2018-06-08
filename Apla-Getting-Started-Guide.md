@@ -128,7 +128,7 @@ $ su -
 ```
 4) Add your user to sudo group:
 ```
-# usermod -aG sudo user
+# usermod -a -G sudo user
 ```
 5) After the reboot, the changes take effect.
 
